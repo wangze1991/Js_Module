@@ -7,15 +7,15 @@
  * 级联select
  * @constructor
  */
-function CSlect(element, option){
-    this.opt = $.extend({}, CSlect.DEFAULT_OPTION.defaultOpt, option);
+function CSelect(element, option){
+    this.opt = $.extend({}, CSelect.DEFAULT_OPTION.defaultOpt, option);
     this.$element = $(element);
     this.$nextElement = $(this.opt.nextSelect);
     this.init();
 }
 
-CSlect.VERSION = '1.0.1';
-CSlect.DEFAULT_OPTION = {
+CSelect.VERSION = '1.0.1';
+CSelect.DEFAULT_OPTION = {
     defaultOpt : {
         url : '',
         emptyText : '--请选择--',
@@ -29,8 +29,8 @@ CSlect.DEFAULT_OPTION = {
     keys : {value : 'value', text : 'text'}
 };
 
-CSlect.prototype = {
-    constructor : CSlect,
+CSelect.prototype = {
+    constructor : CSelect,
     init : function(){
         this.$element.data('emptyText', this.opt.emptyText);
         this.$element.data('refUrl', this.opt.refUrl);
@@ -89,7 +89,7 @@ CSlect.prototype = {
             var htmlArray = [];
             htmlArray.push('<option>' + $ele.data('emptyText') || '&nbsp;' + '</option>');
             $.each(data, function(i, item){
-                htmlArray.push('<option  value="' + item[CSlect.DEFAULT_OPTION.keys['value']] + '">' + item[CSlect.DEFAULT_OPTION.keys['text']] + '</option>');
+                htmlArray.push('<option  value="' + item[CSelect.DEFAULT_OPTION.keys['value']] + '">' + item[CSelect.DEFAULT_OPTION.keys['text']] + '</option>');
             });
             $ele.html(htmlArray.join(''));
             callback && callback(data);

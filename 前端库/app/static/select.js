@@ -8,7 +8,7 @@
  * @constructor
  */
 function CSlect(element, option){
-    //this.opt = $.extend({}, CSlect.DEFAULT_OPTION.defaultOpt, $.extend($(element).data(),option ));
+    //this.opt = $.extend({}, CSelect.DEFAULT_OPTION.defaultOpt, $.extend($(element).data(),option ));
     this.opt = $.extend({}, CSlect.DEFAULT_OPTION.defaultOpt,option);
     this.$element = $(element);
     this.$nextElement = $(this.opt.nextSelect);

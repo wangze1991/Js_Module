@@ -116,27 +116,27 @@
         return result;
     });
     $(function(){
-        /*     var e=new CSlect('#region-select',{val:111});
-         var d=new CSlect('#city-select',{
+        /*     var e=new CSelect('#region-select',{val:111});
+         var d=new CSelect('#city-select',{
          nextSelect:'#region-select',
          refUrl:'/getRegion?parentId={value}',
          val:11
          });
-         var c = new CSlect('#provice-select', {
+         var c = new CSelect('#provice-select', {
          url : '/getProvince',
          nextSelect:'#city-select',
          refUrl:'/getCity?parentId={value}',
          val:1
          });*/
-        var a = new CSlect('#provice-select',{
+        var a = new CSelect('#provice-select',{
                     url : '/getProvince',
                     nextSelect : '#city-select',
                     refUrl : '/getCity?parentId={value}'});
-        var b = new CSlect('#city-select',{
+        var b = new CSelect('#city-select',{
             nextSelect:'#region-select',
             refUrl:'/getRegion?parentId={value}'
         });
-        var c = new CSlect('#region-select');
+        var c = new CSelect('#region-select');
 
         $('#btn-ok').on('click', function(){
             a.select(2).change();
