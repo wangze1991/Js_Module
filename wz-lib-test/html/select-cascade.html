@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div>
+    <select id="provice-select" >
+
+    </select>
+    <select id="city-select"  >
+
+    </select>
+
+    <select id="region-select" >
+
+    </select>
+
+</div>
+<div>
+    <button id="btn-ok">修改</button>
+</div>
+
+<script src="../js/lib/mock.js"></script>
+<script src="../js/lib/jquery-1.10.2.js"></script>
+<script src="../js/select-v1.0.1.js"></script>
+<script>
+    Mock.mock(/\/getProvince/, function(options){
+        return [{
+            value : 1,
+            text : '江苏'
+        },
+            {
+                value : 2,
+                text : '浙江'
+            }
+        ];
+    });
+    Mock.mock(/\/getCity/, function(options){
+        var data = [{
+            parentId : 1,
+            value : 11,
+            text : '常州'
+        }
+            , {
+                parentId : 1,
+                value : 12,
+                text : '徐州'
+            },
+            {
+                parentId : 1,
+                value : 13,
+                text : '无锡'
+            }, {
+                parentId : 2,
+                value : 21,
+                text : '杭州'
+            },
+            {
+                parentId : 2,
+                value : 22,
+                text : '嘉兴'
+            },
+            {
+                parentId : 2,
+                value : 23,
+                text : '温州'
+            }];
+        var url = options.url;
+        var parentId = getUrlParam('parentId', url);
+        var result = $.map(data, function(n){
+            if(n.parentId == parentId)
+                return n;
+            return null;
+        });
+        return result;
+    });
+    Mock.mock(/\/getRegion/, function(options){
+        var data = [{
+            parentId : 11,
+            value : 111,
+            text : '武进'
+        }
+            , {
+                parentId : 11,
+                value : 112,
+                text : '天宁'
+            },
+            {
+                parentId : 12,
+                value : 121,
+                text : '丰县'
+            }, {
+                parentId : 12,
+                value : 122,
+                text : '沛县'
+            },
+            {
+                parentId : 21,
+                value : 211,
+                text : '浙江区域1'
+            },
+            {
+                parentId : 21,
+                value : 212,
+                text : '浙江区域2'
+            }];
+        var url = options.url;
+        var parentId = getUrlParam('parentId', url);
+        var result = $.map(data, function(n){
+            if(n.parentId == parentId)
+                return n;
+            return null;
+        });
+        return result;
+    });
+    $(function(){
+        /*     var e=new CSelect('#region-select',{val:111});
+         var d=new CSelect('#city-select',{
+         nextSelect:'#region-select',
+         refUrl:'/getRegion?parentId={value}',
+         val:11
+         });
+         var c = new CSelect('#provice-select', {
+         url : '/getProvince',
+         nextSelect:'#city-select',
+         refUrl:'/getCity?parentId={value}',
+         val:1
+         });*/
+        var a = new CSelect('#provice-select',{
+                    url : '/getProvince',
+                    nextSelect : '#city-select',
+                    refUrl : '/getCity?parentId={value}'});
+        var b = new CSelect('#city-select',{
+            nextSelect:'#region-select',
+            refUrl:'/getRegion?parentId={value}'
+        });
+        var c = new CSelect('#region-select');
+
+        $('#btn-ok').on('click', function(){
+            a.select(2).change();
+        })
+        a.select(1);
+        b.select(11);
+        c.select(111);
+    });
+    function getMockOption(){
+        $.ajax({
+            url : '/getCity',
+            dataType : 'json',
+            data : {parentId : 1},
+            success : function(data){
+                console.log(data);
+            }
+        })
+    }
+    function getUrlParam(name, url){
+        var u = arguments[1] || window.location.search
+                , reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)")
+                , r = u.substr(u.indexOf("?") + 1).match(reg);
+        return r != null ? encodeURI(r[2]) : "";
+    }
+</script>
+</body>
+</html>
