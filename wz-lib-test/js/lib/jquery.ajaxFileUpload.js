@@ -3,7 +3,7 @@
  */
 jQuery.extend({
     createUploadIframe: function (id, uri) {
-        //create frame
+        //create iframe
         var frameId = 'jUploadFrame' + id,
             src = '';
         if (typeof uri == 'boolean') {
@@ -49,7 +49,7 @@ jQuery.extend({
         var form = $('<form  action="" method="POST" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>');
         var oldElement = $(fileElementId);
         var newElement = $(oldElement).clone();
-
+        //这里是将原先的file文件放到form中
         $(oldElement).attr('id', fileId);
         $(oldElement).before(newElement);
         $(oldElement).appendTo(form);

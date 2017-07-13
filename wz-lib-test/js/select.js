@@ -73,7 +73,7 @@ CSlect.prototype = {
             callback && callback(data);
         }).fail(function(){
                 throw('加载失败');
-        })
+        });
     },
     changeListener : function(){
         var that = this;
@@ -83,13 +83,13 @@ CSlect.prototype = {
             //如果选择值为空，不触发事件。
             if(!selectedValue){
                 //如果有级联select,则相关的select要设置为空
-                if(that.$nextElement.length != 0 && that.opt.refUrl){
+                if(that.$nextElement.length !== 0 && that.opt.refUrl){
                     that.$nextElement.html('<option>'+that.$nextElement.data('emptyText')+'</option>').trigger('change');
                 }
                 return;
             }
             //添加级联事件
-            if(that.$nextElement.length != 0 && that.opt.refUrl){
+            if(that.$nextElement.length !== 0 && that.opt.refUrl){
                 var url=that.opt.refUrl;
                 url=url.replace('{value}',selectedValue).replace('{text}',selectedText);
                 var callback=function(data){
@@ -112,9 +112,9 @@ CSlect.prototype = {
      * 级联初始化，最后一个select使用
      */
     cascadeInit:function(){
-        var _setEmpty=function($obj,$next){
+        /*var _setEmpty=function($obj,$next){
 
-        }
+        }*/
 
     }
 

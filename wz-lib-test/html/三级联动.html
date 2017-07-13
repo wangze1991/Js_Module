@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三级联动展示页面</title>
+</head>
+<body>
+<div id="demo1" class="citys">
+    <p>
+        <select name="province"></select>
+        <select name="city"></select>
+        <select name="area"></select>
+    </p>
+</div>
+<script src="../js/lib/jquery-1.10.2.js"></script>
+<script src="../js/jquery.select.city.js"></script>
+<script>
+    $(function () {
+        $('#demo1').city({
+            url: '../js/json/list.json',
+            required: false,
+            code: 130324,
+            /*   province:'黑龙江省',
+             city:'鹤岗市',
+             area:'南山区'*/
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

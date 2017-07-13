@@ -48,7 +48,7 @@ CSelect.prototype = {
         if(that.opt.url){
             that._ajaxLoad(that.$element, that.opt.url, callback);
         } else {
-            that.$element.html('<option>' + that.opt.emptyText + '</option>')
+            that.$element.html('<option>' + that.opt.emptyText + '</option>');
         }
 
     },
@@ -61,10 +61,12 @@ CSelect.prototype = {
             if($_nextselect && $_nextselect.length){
                 var emptytxt = $_nextselect.data('emptyText') || '&nbsp;'
                 $_nextselect.html('<option>' + emptytxt + '</option>');
-                _setEmpty($_nextselect)
+                _setEmpty($_nextselect);
             }
         }
-        if(!val)val = $ele.val();
+        if(!val){
+            val = $ele.val();
+        }
         if($next && $next.length > 0 && refUrl){
             var url = refUrl.replace('{value}', encodeURIComponent(val));//注意字符串编码
             that._ajaxLoad($next, url, function(){
@@ -75,7 +77,7 @@ CSelect.prototype = {
                 }
                 $next.removeAttr('data-val').removeData('val');
             });
-            _setEmpty($next)
+            _setEmpty($next);
         }
         $ele.removeAttr('data-val').removeData('val');
     },

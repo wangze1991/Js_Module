@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var wa="11111";
+    var c=2;
+    var j=5;
+    (function () {
+        var closure = function () {
+            var array = [];
+            for (var i = 0; i < 10; i++) {
+                array[i] = (function (j) {
+                    return function () {
+                        return j;
+                    }
+                })(i)
+            }
+            for (var j = 0; j < array.length; j++) {
+                console.log(array[j]());
+            }
+        };
+
+        closure();
+
+        var closure2=function () {
+            var a=1;
+
+            function  closure2Alert() {
+                    console.log(a);
+            }
+            closure2Alert();
+        };
+        closure2();
+        alert(this.wa);
+        alert(window.wa);
+    })();
+</script>
+</body>
+</html>
