@@ -116,23 +116,34 @@
                     }
                 } else {
                     setEmpty();
+                    if (opt.nodata === 'hidden') {
+                        $city.hide();
+                        $area.hide();
+                    }
                 }
             }
 
             function areaChange(cityValue) {
                 $area.empty();
-                if (!cityValue) {
-                    cityValue = $city.val();
+                if (cityValue) {
+                    if ($area.is(':hidden')) {
+                        $area.show();
+                    }
+                    var areas = getAreaData(data, cityValue);
+                    $area.html(renderHtml(areas));
+                    if (opt.area) {
+                        $area.val(opt.area);
+                        opt.area = 0;
+                    }
+                } else {
+                    if (opt.required === false) {
+                        $area.html(renderHtml());
+                    }
+                    if (opt.nodata === 'hidden') {
+                        $area.hide();
+                    }
                 }
-                if ($area.is(':hidden')) {
-                    $area.show();
-                }
-                var areas = getAreaData(data, cityValue);
-                $area.html(renderHtml(areas));
-                if (opt.area) {
-                    $area.val(opt.area);
-                    opt.area = 0;
-                }
+
             }
 
             function renderHtml(obj) {
@@ -151,7 +162,6 @@
                 if (opt.required === false) {
                     $city.html(renderHtml());
                     $area.html(renderHtml());
-                    $area.hide();
                 }
             }
 
