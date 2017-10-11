@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文本框邮件输入自动完成jquery插件</title>
+    <style type="text/css">
+        .emailist{border:1px solid #bdbdbd; border-radius: 4px; background-color:#fff; color:#666; font-size:14px; list-style-type:0; padding:0; margin:0; overflow:hidden;}
+        .emailist li{padding:2px 11px; cursor:pointer;}
+        .emailist .on, .emailist li:hover{background-color:#eee;}
+    </style>
+
+
+</head>
+<body>
+<div class="demo" style="padding:3% 0 6% 35%;">
+    <input type="email" class="input inputMailList" name="email" placeholder="请输入邮箱" required autofocus autocomplete="off">
+</div>
+<script src="../js/lib/jquery-1.10.2.js"></script>
+<script src="../js/jquery.mailAutoComplete-4.0.js"></script>
+<script>
+    $(".inputMailList").mailAutoComplete();
+</script>
+</body>
+</html>

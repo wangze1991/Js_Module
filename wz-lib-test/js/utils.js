@@ -27,15 +27,6 @@
             window.close();
         }
     }
-
-    /**
-     * 获取浏览器类型
-     */
-    function explorerTest() {
-
-    }
-
-
     /**
      * 转换成jquery对象
      * @param obj jquery对象或jquery选择器
@@ -61,7 +52,6 @@
      * @param $content
      * @returns {*}
      */
-
     (function () {
         utils.dateUtil = {
             format: function (time, fmt) {
@@ -74,11 +64,14 @@
                     "q+": Math.floor((time.getMonth() + 3) / 3), //季度
                     "S": time.getMilliseconds() //毫秒
                 };
-                if (/(y+)/.test(fmt))
+                if (/(y+)/.test(fmt)) {
                     fmt = fmt.replace(RegExp.$1, (time.getFullYear() + "").substr(4 - RegExp.$1.length));
-                for (var k in o)
-                    if (new RegExp("(" + k + ")").test(fmt))
+                }
+                for (var k in o) {
+                    if (new RegExp("(" + k + ")").test(fmt)) {
                         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                    }
+                }
                 return fmt;
             }
         };
@@ -89,39 +82,38 @@
      */
     (function () {
         utils.stringUtil = {
-            /**字符串格式化
-             @param str 字符串
-             @param value 替换值
-             @example  "我是{0},身高{1}"
+            /**
+             * string 参数格式化
+             * @param source
+             * @param params
+             * @returns {*}
              */
-            'format': function (str, value) {
-                if (utils.isn)
-                    for (var i = 0; i < arguments.length; i++) {
-                        var j = i + 1;
-                        if (arguments[j] != undefined) {
-                            var reg = new RegExp("({)" + i + "(})", "g");
-                            str = str.replace(reg, arguments[j]);
-                        }
-                    }
-                return str;
+            format: function (source, params) {
+                if (arguments.length == 1) {
+                    return source;
+                }
+                if (arguments.length > 2 && params.constructor != Array) {
+                    params = $.makeArray(arguments).slice(1);
+                }
+                if (params.constructor != Array) {
+                    params = [params];
+                }
+                $.each(params, function (i, n) {
+                    source = source.replace(new RegExp("\\{" + i + "\\}", "g"), n);
+                });
+                return source;
             },
-            'trim': function (s) {
-                // return $.trim(str);
-                var str = "" + s,
-                    ws = /\s/,
-                    i = str.length;
-                str = str.replace(/^\s\s*/, "");
-                while (ws.test(str.charAt(--i))) {};
-                return str.slice(0, i + 1);
+            'trim': function (str) {
+                return $.trim(str);
             },
             'isBlank': function (str) {
                 return !utils.isNotBlank(str);
             },
             'isNotBlank': function (str) {
-                if (str === undefined || str === null || str === '') {
-                    return false;
+                if (str || str === 0) {
+                    return $.trim(str).length > 0;
                 }
-                return $.trim(str).length > 0;
+                return false;
             }
         };
     })();
@@ -156,16 +148,15 @@
                     if (this.type == "text" || this.type == "hidden") {
                         $(this).val(val);
                     } else if (this.type == "checkbox") {
-                        $(this).prop("checked", val == "True" || val == true);
+                        $(this).prop("checked", val == "True" || val === true);
                     } else if ((this.type == "radio")) {
                         $("input[name=" + this.name + "][value=" + val + "]").prop("checked", true);
                     }
                 });
                 $('textarea,select', $form).each(function () {
                     if (param.hasOwnProperty(this.name) === false) {
-                        return true
+                        return true;
                     }
-                    ;
                     $(this).val(param[this.name]);
                 });
             }
@@ -190,12 +181,16 @@
                         continue;
                     }
                     if (el.type == 'checkbox') {
-                        if ($(el).prop("checked") !== true)
+                        if ($(el).prop("checked") !== true) {
                             continue;
+                        }
+
                     }
                     if (el.type == 'radio') {
-                        if ($(el).prop("checked") !== true)
+                        if ($(el).prop("checked") !== true) {
                             continue;
+                        }
+
                     }
                     v = $.trim($(el).val());
                     if (v && v.constructor === Array) {
@@ -207,7 +202,8 @@
                     }
                 }
                 return a;
-            },'formToObject': function () {
+            },
+            'formToObject': function () {
 
             }
         };

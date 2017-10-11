@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下拉框搜索提示</title>
+    <link rel="stylesheet" href="../css/cssreset-min.css">
+    <link rel="stylesheet" href="../css/suggestion.css">
+</head>
+<body>
+<div class="search">
+    <input class="input-text" type="text" name="word" value="" placeholder="输入想要搜索的关键词" autocomplete="off">
+    <input class="input-submit" type="submit" value="搜索" id="btn-search">
+</div>
+
+
+<script src="../js/lib/jquery-1.10.2.js"></script>
+<script src="../js/jquery.suggestion.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.search input[type="text"]').suggestion({
+            url: 'http://suggestion.baidu.com/s',
+            dataType: 'jsonp',
+            jsonp: 'cb',
+            transferData: function (input) {
+                return {wd: input.val()}
+            },
+            onCallback: function (item, data) {
+                debugger
+                var list = data['s'];
+                item.empty();
+                for (var i = 0; i < list.length; i++) {
+                    console.log(list[i]);
+                    item.append('<li>' + list[i] + '</li>');
+                }
+            }
+
+        });
+    });
+
+</script>
+</body>
+</html>

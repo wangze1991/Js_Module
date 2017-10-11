@@ -1,0 +1,32 @@
+.search{
+    width:400px;
+    margin: 0 auto 25px;
+}
+.search .input-text{
+    width: 200px;
+    padding:4px 10px;
+    line-height: 20px;
+}
+.search .input-submit{
+    width:60px;
+    height: 30px;
+    line-height: 30px;
+}
+.suggestion{
+    background: #fff;
+}
+.suggestion ul{
+    border:1px solid #ebebeb;
+}
+.suggestion li{
+    padding:0 10px;
+    line-height: 24px;
+}
+.suggestion .active{
+    background: #ccc;
+}
+.code {
+    border: 1px dashed #e2e2e2;
+    padding: 10px 5px;
+    margin-bottom: 25px;
+}
