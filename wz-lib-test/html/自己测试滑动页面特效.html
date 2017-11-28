@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #drag {
+            /* position: relative;*/
+            background-color: #e8e8e8;
+            width: 300px;
+            height: 34px;
+            line-height: 34px;
+            text-align: center;
+        }
+        .handler2 {
+            position: absolute;
+            top: 10px;
+            left: 19px;
+            width: 40px;
+            height: 32px;
+            border: 1px solid #ccc;
+            cursor: move;
+        }
+        #drag .handler {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 40px;
+            height: 32px;
+            border: 1px solid #ccc;
+            cursor: move;
+        }
+
+        .handler_ok_bg {
+            background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFW…IxGZo8GUhIysmwQGSAZgwHaEZhICIzOaBkJkqyM0CAAQDGx279Jf50AAAAAABJRU5ErkJggg==) no-repeat center;
+        }
+    </style>
+
+</head>
+<body>
+<div>
+    <div id="drag">
+        <div class="drag_text" onselectstart="return false;" unselectable="on">验证通过</div>
+        <div class="handler handler_ok_bg"></div>
+    </div>
+    <div class=" handler_ok_bg handler2"></div>
+</div>
+<script src="../js/lib/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    /* ;(function () {
+         var isMove = false;
+         var x, y = 0;
+         var $handler = $('.handler');
+         var position = null;//应当记住初始时候的位置;
+
+         var mouseupHandler = function (e) {
+             $(document).off('mousemove', mousemoveHandler);
+             $(document).off('mouseup', mouseupHandler);
+             isMove = false;
+             x = y = 0;
+             $handler.css('cursor', 'auto');
+             e.preventDefault();
+         };
+
+         var mousemoveHandler = function (e) {
+             if (!isMove) return false;
+             if (!position) return false;
+             $handler.css({
+                 left: position.left + (e.pageX - x),
+                 top: position.top + (e.pageY - y)
+             });
+             e.preventDefault();
+
+         }
+
+         $('.handler').on('mousedown', function (e) {
+             x = e.pageX;
+             y = e.pageY;
+             isMove = true;
+             position = $(this).position();
+             $handler.css('cursor', 'move');
+             $(document).on('mousemove', mousemoveHandler);
+             $(document).on('mouseup', mouseupHandler);
+             e.preventDefault();
+         });
+         /!*  $(document).on('mouseup', mouseupHandler);
+           $(document).on('mousemove',mousemoveHandler);*!/
+     })();*/
+    //https://www.cnblogs.com/cloudgamer/archive/2008/11/17/Drag.html
+
+    ;(function (w) {
+        var defaultOpt = {
+            isMove: false,
+            x: 0,
+            y: 0,
+            isX:false,
+            isY:false,
+            isAll:true,
+            dragMove:function () {
+            }
+        }
+
+        function Drag(ele, opt) {
+            this.ele = ele;
+            this.opt = $.extend({}, defaultOpt, opt);
+            this.opt.version = new Date().getTime();
+        }
+
+        Drag.prototype.init = function () {
+            var that = this,
+                opt = that.opt;
+            that.ele.on('mousedown', function (e) {
+                var offset = $(this).offset();
+                that.ele.css('cursor', 'move');
+                opt.x = e.pageX - offset.left;
+                opt.y = e.pageY - offset.top;
+                opt.isMove = true;
+                e.preventDefault();
+                $(document).on('mouseup.' + opt.version, function (e) {
+                    that.stop(e);
+                }).on('mousemove.' + opt.version, function (e) {
+                    that.start(e);
+                });
+            });
+
+        }
+        Drag.prototype.start = function (e) {
+            var that = this,
+                opt = that.opt;
+            if (!opt.isMove) return false;
+            that.ele.css({
+                left: e.pageX - opt.x,
+                top: e.pageY - opt.y
+            });
+
+            e.preventDefault();
+        }
+        Drag.prototype.stop = function (e) {
+            var that = this,
+                opt = that.opt;
+            opt.isMove = false;
+            that.ele.css('cursor', 'auto');
+            $(document).off('.' + opt.version);
+            e.preventDefault();
+        }
+        w.Drag = Drag;
+    })(window);
+
+    (function () {
+        var drag = new Drag($('.handler'));
+        drag.init();
+        var drag2 = new Drag($('.handler2'));
+        drag2.init();
+    })();
+
+</script>
+</body>
+</html>

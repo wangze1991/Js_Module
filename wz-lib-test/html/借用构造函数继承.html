@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>借用构造函数继承</title>
+</head>
+<body>
+
+
+<script>
+    function  SuperType(name) {
+        this.superName=name;
+        this.superId=1;
+    }
+    SuperType.prototype.hello=function () {
+        alert('hello');
+    }
+
+    function  SubType(name) {
+        SuperType.call(this,'wangze');
+        this.subName=name;
+    }
+    SubType.prototype=new SubType();
+
+
+    var instance=new SubType('我是子函数');
+    console.log(instance);
+</script>
+</body>
+</html>

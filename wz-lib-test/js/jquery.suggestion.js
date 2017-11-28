@@ -6,7 +6,6 @@
  **/
 
 ;(function () {
-
     $.fn.suggestion = function (options) {
         return this.each(function () {
             //bindEvent(this);
@@ -14,18 +13,12 @@
             s.init();
         });
     };
-
-
     function Suggestion(ele, options) {
         this.opt = $.extend({}, $.fn.suggestion.defaults, options);
         this.ele = ele;
     }
-
-
     var proto = Suggestion.prototype;
-
     var cacheText = '';//缓存用户输入的数据,两种方式缓存，一种设置dom属性，一种设置js变量
-
     var key = {
         'up': 38,
         'down': 40,
@@ -46,8 +39,6 @@
             e.stopPropagation();
             that.showSuggestion();
         });
-
-
         //keyup事件
         that.ele.on('keydown', function (e) {
             e.stopPropagation();

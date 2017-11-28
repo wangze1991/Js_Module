@@ -6,12 +6,10 @@
         });
 
     };
-
     function Pagination(ele, option) {
         this.opt = $.extend({}, $.fn.pagination.defaults, option);
         this.ele = ele;
     }
-
     var proto = Pagination.prototype;
     /**
      * 初始化分页控件
@@ -47,6 +45,7 @@
         });
 
     };
+
     $.fn.pagination.defaults = {
         totalPage: 0,
         count: 0,//总条数
@@ -95,7 +94,7 @@
                 for (var j = currentPage - halfPage; j <= currentPage + halfPage; j++) {
                     html.push('<span class="jump">' + j + '</span>');
                 }
-                html.push('<span class="ellipsis" style="">...</span>');
+                html.push('<span class="ellipsis">...</span>');
             } else {
                 for (var k = totalPage - opt.showPage + 1; k <= totalPage; k++) {
                     html.push('<span class="jump">' + k + '</span>');

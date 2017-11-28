@@ -6,6 +6,7 @@
  * 三级下拉框(省市区)
  */
 ;(function () {
+    'use strict';
     var defaults = {
         url: 'http://passer-by.com/data_location/list.json',     //数据库地址
         //crossDomain: true,        //是否开启跨域
@@ -18,12 +19,13 @@
         province: 0,               //省份,可以为地区编码或者名称
         city: 0,                   //城市,可以为地区编码或者名称
         area: 0,                   //地区,可以为地区编码或者名称
-        required: true,           //是否必须选一个
-        nodata: 'hidden',         //当无数据时的表现形式:'hidden'隐藏,'disabled'禁用,为空不做任何处理
+        required: false,            //是否必须选一个
+        nodata: 'hidden',          //当无数据时的表现形式:'hidden'隐藏,'disabled'禁用,为空不做任何处理
         emptyText: '--请选择--',
         onChange: function () {
         }     //地区切换时触发,回调函数传入地区数据
     };
+
 
     $.fn.city = function (option) {
         return this.each(function () {
@@ -31,7 +33,6 @@
             cs.init();
         });
     }
-
 
     /**
      * 级联选择
@@ -64,24 +65,21 @@
                 alert('数据加载失败');
                 return;
             }
-
             setSelectedValue();
-
             setEmpty();
-
             provinceChange();
 
             $province.on('change', function () {
                 cityChange();
             });
-
             $city.on('change', function () {
                 areaChange($(this).val());
             });
 
-            $area.on('change', function () {
-                // areaChange();
-            });
+            /* $area.on('change', function () {
+                 // areaChange();
+             });*/
+
             function provinceChange() {
                 var values = getProvinceData(data);
                 $province.html(renderHtml(values));
@@ -97,17 +95,22 @@
                 if (provinceValue) {
                     $city.empty();
                     //这里需要判断所选中的省市是直辖市
-                    var citys = getCityData(data, provinceValue);
-                    if ($.isEmptyObject(citys)) {
-                        if ($city.is(':hidden') === false) {
-                            $city.hide();
-                        }
+                    var cities = getCityData(data, provinceValue);
+                    //如果获取城市为空，则表明是直辖市
+                    if ($.isEmptyObject(cities)) {
+                        /* if ($city.is(':hidden') === false) {
+                             $city.hide();
+                         }*/
+                        $province.find('option:selected').clone().appendTo($city);
+                        noDataHandler(false, $city);
                         areaChange(provinceValue);
+
                     } else {
-                        if ($city.is(':hidden') === true) {
-                            $city.show();
-                        }
-                        $city.html(renderHtml(citys));
+                        /* if ($city.is(':hidden') === true) {
+                             $city.show();
+                         }*/
+                        noDataHandler(true,$city);
+                        $city.html(renderHtml(cities));
                         if (opt.city) {
                             $city.val(opt.city);
                             opt.city = 0;
@@ -116,19 +119,27 @@
                     }
                 } else {
                     setEmpty();
-                    if (opt.nodata === 'hidden') {
-                        $city.hide();
-                        $area.hide();
-                    }
+                    noDataHandler(false, $city);
+                    noDataHandler(false, $area);
+                    /* if (opt.nodata === 'hidden') {
+                         //$city.hide();
+                         $area.hide();
+                     } else if (opt.nodata === 'disabled') {
+                         $area.prop('disabled', true);
+                     }*/
                 }
             }
 
             function areaChange(cityValue) {
                 $area.empty();
                 if (cityValue) {
+                    noDataHandler(true, $area);
+                    /*if($area.is('disabled')){
+                        $area.prop('disabled',true);
+                    }
                     if ($area.is(':hidden')) {
                         $area.show();
-                    }
+                    }*/
                     var areas = getAreaData(data, cityValue);
                     $area.html(renderHtml(areas));
                     if (opt.area) {
@@ -139,25 +150,33 @@
                     if (opt.required === false) {
                         $area.html(renderHtml());
                     }
-                    if (opt.nodata === 'hidden') {
-                        $area.hide();
-                    }
+                    noDataHandler(false, $area);
+                    /*     if (opt.nodata === 'hidden') {
+                             $area.hide();
+                         }*/
                 }
 
             }
 
+            /**
+             * 展示数据
+             * @param obj
+             * @returns {string}
+             */
             function renderHtml(obj) {
                 var html = [];
                 if (opt.required === false) {
-                    html.push('<option value="">--请选择--</option>');
+                    html.push('<option value="">' + opt.emptyText + '</option>');
                 }
-
                 $.each((obj || {}), function (key, value) {
                     html.push('<option value="' + key + '">' + value + '</option>');
                 });
                 return html.join('');
             }
 
+            /**
+             * 设置为空html
+             */
             function setEmpty() {
                 if (opt.required === false) {
                     $city.html(renderHtml());
@@ -165,6 +184,9 @@
                 }
             }
 
+            /**
+             * 获取默认选中项的值
+             */
             function setSelectedValue() {
                 var code = opt.code;
                 if (code) {
@@ -173,7 +195,7 @@
                     opt.area = code;
                 } else {
                     //如果设置中文
-                    if (opt.province && typeof  opt.province === 'string') {
+                    if (opt.province && typeof opt.province === 'string') {
                         opt.province = getCodeByChineseName(opt.province);
                     }
                     if (opt.city && typeof  opt.city === 'string') {
@@ -185,6 +207,11 @@
                 }
             }
 
+            /**
+             * 根据中文名称，获取code
+             * @param name
+             * @returns {number}
+             */
             function getCodeByChineseName(name) {
                 var result = 0;
                 $.each(data, function (k, v) {
@@ -196,12 +223,43 @@
                 return result;
             }
 
+            /**
+             *
+             * @param currentNode
+             */
+            function noDataHandler(isShow, node) {
+                var nValue = {
+                    hidden: {
+                        0: function show() {
+                            this.show();
+                        },
+                        1: function hide() {
+                            this.hide();
+                        }
+                    },
+                    disabled: {
+                        0: function show() {
+                            this.prop('disabled', false);
+                        },
+                        1: function hide() {
+                            this.prop('disabled', true);
+                        }
+
+                    }
+                };
+                nValue[opt.nodata][isShow ? 0 : 1].call(node);
+            }
+
         }).fail(function () {
 
         });
     };
 
-
+    /**
+     * 获取省数据
+     * @param data
+     * @returns {{}}
+     */
     function getProvinceData(data) {
         var province = {};
         for (var code in data) {
@@ -212,6 +270,12 @@
         return province;
     }
 
+    /**
+     * 获取区的数据
+     * @param data
+     * @param selectProvince
+     * @returns {{}}
+     */
     function getCityData(data, selectProvince) {
         var city = {};
         if (!selectProvince) {
@@ -225,6 +289,12 @@
         return city;
     }
 
+    /**
+     * 获取乡镇数据
+     * @param data
+     * @param selectedCity
+     * @returns {{}}
+     */
     function getAreaData(data, selectedCity) {
         var area = {};
         if (!selectedCity) {
@@ -246,8 +316,6 @@
                 }
             });
         }
-
-
         return area;
     }
 

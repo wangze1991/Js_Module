@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原型继承</title>
+</head>
+<body>
+
+
+
+<script>
+    function  SuperType() {
+        this.property=true;
+    }
+    SuperType.prototype.getSuperValue=function () {
+        return this.property;
+    }
+    function  SubType() {
+        this.subProperty=false;
+    }
+    SubType.prototype=new SuperType();
+    SubType.prototype.getSubValue=function () {
+        return this.subProperty;
+    }
+    var instance=new SubType();
+    alert(instance.getSuperValue());
+    console.log(instance);
+
+
+</script>
+</body>
+</html>

@@ -161,7 +161,7 @@
         var u = arguments[1] || window.location.search
                 , reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)")
                 , r = u.substr(u.indexOf("?") + 1).match(reg);
-        return r != null ? encodeURI(r[2]) : "";
+        return r != null ? decodeURIComponent(r[2]) : "";
     }
 </script>
 </body>
