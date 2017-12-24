@@ -9,6 +9,7 @@
     function Pagination(ele, option) {
         this.opt = $.extend({}, $.fn.pagination.defaults, option);
         this.ele = ele;
+        console.log(this.opt);
     }
     var proto = Pagination.prototype;
     /**
@@ -78,7 +79,8 @@
         html.push('<span class="jump ' + prevDisabled + '">' + opt.prev + '</span>');
         //判断跳转是否大于5或者跳转页数  totalpage-showpage+Math.floor(showpage/2)
         //当 当前页 大于5的时候，才考虑特殊分页
-        if (currentPage <= 5 || totalPage <= opt.showPage) {
+        // if (currentPage <= 5 || totalPage <= opt.showPage) {
+        if (currentPage <=opt.showPage || totalPage <= opt.showPage) {
             for (var i = 0; i < opt.showPage; i++) {
                 html.push('<span class="jump">' + (i + 1) + '</span>');
             }
@@ -89,7 +91,7 @@
             //当页数大于5的时候，默认显示第一页
             html.push('<span class="jump">1</span>');
             html.push('<span class="ellipsis" style="">...</span>');
-            //当 当前页数在总页数的前半段的时候
+            //当前页数在总页数的前半段的时候
             if (currentPage < largePage) {
                 for (var j = currentPage - halfPage; j <= currentPage + halfPage; j++) {
                     html.push('<span class="jump">' + j + '</span>');

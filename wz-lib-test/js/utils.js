@@ -27,6 +27,7 @@
             window.close();
         }
     }
+
     /**
      * 转换成jquery对象
      * @param obj jquery对象或jquery选择器
@@ -81,6 +82,32 @@
      * 字符串公共方法
      */
     (function () {
+
+        /**string 扩展方法  字符串格式化
+         */
+        // String.prototype.format = function (args) {
+        //     var result = this;
+        //     if (arguments.length > 0) {
+        //         if (arguments.length == 1 && typeof (args) == "object") {
+        //             for (var key in args) {
+        //                 if (args[key] != undefined) {
+        //                     var reg = new RegExp("({" + key + "})", "g");
+        //                     result = result.replace(reg, args[key]);
+        //                 }
+        //             }
+        //         }//example   var template2="我是{name}，今年{age}了";var result2=template2.format({name:"loogn",age:22});
+        //         else {
+        //             for (var i = 0; i < arguments.length; i++) {
+        //                 if (arguments[i] != undefined) {
+        //                     var reg = new RegExp("({)" + i + "(})", "g");
+        //                     result = result.replace(reg, arguments[i]);
+        //                 }
+        //             }//expample var template1="我是{0}，今年{1}了"; var result1=template1.format("loogn",22);
+        //         }
+        //     }
+        //     return result;
+        // };
+
         utils.stringUtil = {
             /**
              * string 参数格式化
@@ -159,11 +186,11 @@
                     }
                     $(this).val(param[this.name]);
                 });
-            }
+            },
             /**
              * 表单值转换为[{name:'',value}]键值对,也可以直接使用jquery.serialize
              */
-            , 'formToArray': function ($form) {
+            'formToArray': function ($form) {
                 var a = [];
                 if ($form.length === 0) {
                     return a;
@@ -190,24 +217,157 @@
                         if ($(el).prop("checked") !== true) {
                             continue;
                         }
-
                     }
                     v = $.trim($(el).val());
                     if (v && v.constructor === Array) {
                         for (j = 0, jmax = v.length; j < jmax; j++) {
                             a.push({name: n, value: v[j]});
                         }
-                    } else if (v !== null && typeof v != 'undefined' && v != '') {
+                    } else if (v !== null && typeof v != 'undefined' && v !== '') {
                         a.push({name: n, value: v});
                     }
                 }
                 return a;
             },
+
+
             'formToObject': function () {
 
             }
         };
     })();
+
+
+    /**
+     * 一些公用的jquery 公用方法
+     */
+    (function () {
+
+        // jQuery.prototype.serializeObject=function(){
+        //     var a,o,h,i,e;
+        //     a=this.serializeArray();
+        //     o={};
+        //     h=o.hasOwnProperty;
+        //     for(i=0;i<a.length;i++){
+        //         e=a[i];
+        //         if(!h.call(o,e.name)){
+        //             o[e.name]=e.value;
+        //         }
+        //     }
+        //     return o;
+        // };
+
+        $.fn.serializeObject = function () {
+            var o = {};
+            //var nameArray = [];
+            var a = this.serializeArray();
+            $.each(a, function () {
+                //存在 name相同的情况
+                var val = $.trim(this.value || '');
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                        //nameArray.push(this.name);//防止重复(第一次才添加)
+                    }
+                    o[this.name].push(val);
+
+                } else {
+                    o[this.name] = val;
+                }
+            });
+            // $.each(nameArray, function (i, item) {
+            //     o[item] = o[item].join(',');
+            // });
+            return o;
+        };
+
+        /**绑定参数
+         */
+        ;(function () {
+            $.fn.bindForm = function (params) {
+                var me = this;
+                return me.each(function () {
+                    var self = this;
+                    new FormBind({'form': $(self), 'params': params}).bind();
+                });
+            }
+
+            function FormBind(opt) {
+                this.form = opt.form;
+                this.params = opt.params;
+            }
+
+            FormBind.prototype.bind = function () {
+                var self = this;
+                if (!self.params) {
+                    return;
+                }
+                $('input', self.form).each(function () {
+                    var me = this;
+                    if ($(me).attr('data-bind-ignore') == 'true') return true;//continue
+                    var val = self.timeFormatter(self.params[me.name]);
+                    //if (typeof val === 'object') return true;
+                    if (me.type == "text" || me.type == "hidden") {
+                        $(me).val(val);
+                    }
+                    else if (me.type == "checkbox") {
+                        if ($.isArray(val)) {
+                            if ($.inArray($(me).val(), val) != -1) {
+                                $(me).prop("checked", true).click();
+                            }
+                        } else {
+                            $(me).attr("checked", val == "True" || val == true).click();
+                        }
+                    }
+                    else if ((me.type == "radio")) {
+                        $("input[name=" + me.name + "][value=" + val + "]").prop("checked", true).click();
+                    }
+                });
+                //这里也只考虑SELECT单选的情况(多选要重写)
+                $('textarea,select', self.form).each(function () {
+                    var val = self.params[this.name];
+                    if (val === null || val === undefined) {
+                        return;
+                    }
+                    $(this).val((self.params[this.name]));
+                });
+                //$('select', self.form).each(function () {
+                //    var val = self.params[this.name];
+                //    if (val === null) return;
+                //    $(this).find("option[value='" +val.toString()+ "']").prop("selected", true);
+                //});
+                $('label', self.form).each(function () {
+                    var val = self.timeFormatter(self.params[$(this).attr("name")]);
+                    $(this).html(val);
+                });
+            }
+            FormBind.prototype.timeFormatter = function (value) {
+                if (!value || value !== 0) {
+                    return value;
+                }
+                var date;
+                if (value.toString().indexOf("\/Date(") == -1) {
+                    return value;
+                }
+                date = new Date(parseInt(value.replace("/Date(", "").replace(")/", ""), 10));
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                var d = date.getDate();
+                var t = y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + ' ';
+                var hh = date.getHours();
+                var mm = date.getMinutes();
+                var ss = date.getSeconds();
+                if (ss === 0 && hh === 0 && mm === 0) {
+                    return t;
+                }
+                t += (hh < 10 ? ('0' + hh) : hh) + ':' + (mm < 10 ? ('0' + mm) : mm) + ':' + (ss < 10 ? ('0' + ss) : ss);
+                return t;
+            };
+        })();
+
+
+    })();
+
 
     return utils;
 })();

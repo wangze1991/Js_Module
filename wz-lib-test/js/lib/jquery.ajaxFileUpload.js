@@ -77,12 +77,15 @@ jQuery.extend({
     ajaxFileUpload: function (s) {
         // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout
         s = jQuery.extend({secureuri: false}, jQuery.ajaxSettings, s);
-        var id = new Date().getTime()
+        var id = new Date().getTime();
         var form = jQuery.createUploadForm(id, s.fileElementId);
-        if (s.data) form = jQuery.addOtherRequestsToForm(form, s.data);
-        jQuery.createUploadIframe(id, s.secureuri);
         var frameId = 'jUploadFrame' + id;
         var formId = 'jUploadForm' + id;
+        if (s.data) {
+            form = jQuery.addOtherRequestsToForm(form, s.data);
+        }
+        jQuery.createUploadIframe(id, s.secureuri);
+
         // Watch for a new set of requests
         if (s.global && !jQuery.active++) {
             jQuery.event.trigger("ajaxStart");
@@ -96,19 +99,19 @@ jQuery.extend({
         var uploadCallback = function (isTimeout) {
             var io = document.getElementById(frameId);
             try {
-                xml.responseText = io.contentWindow.document.getElementById('file-callback').value;
-                xml.responseXML = io.contentWindow.document.XMLDocument ? io.contentWindow.document.XMLDocument : io.contentWindow.document;
-                //这里先注释掉，ie9获取不到innerHTML,所以最好使用是input放一个value
+                // xml.responseText = io.contentWindow.document.getElementById('file-callback').value;
+                // xml.responseXML = io.contentWindow.document.XMLDocument ? io.contentWindow.document.XMLDocument : io.contentWindow.document;
+                //这里先注释掉，ie9获取不到innerHTML,所以最好使用是input放一个value,因为有可能有些chrome插件会插入文本
                 //https://github.com/flowjs/fusty-flow.js/issues/3
                 //$.iFrame.contentWindow.document.documentElement.childNodes[0].data
-                /* if (io.contentWindow) {
-                 xml.responseText = io.contentWindow.document.body ? io.contentWindow.document.body.innerHTML : null;
-                 xml.responseXML = io.contentWindow.document.XMLDocument ? io.contentWindow.document.XMLDocument : io.contentWindow.document;
+                if (io.contentWindow) {
+                    xml.responseText = io.contentWindow.document.body ? io.contentWindow.document.body.innerHTML : null;
+                    xml.responseXML = io.contentWindow.document.XMLDocument ? io.contentWindow.document.XMLDocument : io.contentWindow.document;
 
-                 } else if (io.contentDocument) {
-                 xml.responseText = io.contentDocument.document.body ? io.contentDocument.document.body.innerHTML : null;
-                 xml.responseXML = io.contentDocument.document.XMLDocument ? io.contentDocument.document.XMLDocument : io.contentDocument.document;
-                 }*/
+                } else if (io.contentDocument) {
+                    xml.responseText = io.contentDocument.document.body ? io.contentDocument.document.body.innerHTML : null;
+                    xml.responseXML = io.contentDocument.document.XMLDocument ? io.contentDocument.document.XMLDocument : io.contentDocument.document;
+                }
             } catch (e) {
                 jQuery.handleFileError(s, xml, null, e);
             }
@@ -163,7 +166,7 @@ jQuery.extend({
                 xml = null;
 
             }
-        }
+        };
         // Timeout checker
         if (s.timeout > 0) {
             setTimeout(function () {
@@ -173,21 +176,24 @@ jQuery.extend({
         }
         try {
             // var io = $('#' + frameId);
-            var form = $('#' + formId);
-            $(form).attr('action', s.url);
-            $(form).attr('method', 'POST');
-            $(form).attr('target', frameId);
-            if (form.encoding) {
-                form.encoding = 'multipart/form-data';
-            }
-            else {
-                form.enctype = 'multipart/form-data';
-            }
-            $(form).submit();
+            //var form = $('#' + formId);
+            //var form = document.getElementById(formId);
+            form.attr('action', s.url);
+            form.attr('method', 'POST');
+            form.attr('target', frameId);
+            // if (form.encoding) {
+            //     form.encoding = 'multipart/form-data';
+            // }
+            // else {
+            //     form.enctype = 'multipart/form-data';
+            // }
+            form.submit();
 
         } catch (e) {
             jQuery.handleFileError(s, xml, null, e);
         }
+
+
         if (window.attachEvent) {
             document.getElementById(frameId).attachEvent('onload', uploadCallback);
         }

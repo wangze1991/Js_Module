@@ -2,7 +2,7 @@
 (function ($) {
     //单个验证
     $.fn.dlongValidationStart = function () {
-        $(this).find("[class*='dlong-validation']").each(function (i) {
+        this.find("[class*='dlong-validation']").each(function (i) {
             var reg = /dlong-validation\[(.*)\]/;
             var field = reg.exec($(this).attr("class"))[1];
             $(this).blur(function () {

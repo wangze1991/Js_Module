@@ -12,15 +12,17 @@
             line-height: 34px;
             text-align: center;
         }
+
         .handler2 {
             position: absolute;
-            top: 10px;
-            left: 19px;
-            width: 40px;
-            height: 32px;
+            top: 300px;
+            left: 200px;
+            width: 100px;
+            height: 100px;
             border: 1px solid #ccc;
             cursor: move;
         }
+
         #drag .handler {
             position: absolute;
             top: 0px;
@@ -43,7 +45,11 @@
         <div class="drag_text" onselectstart="return false;" unselectable="on">验证通过</div>
         <div class="handler handler_ok_bg"></div>
     </div>
-    <div class=" handler_ok_bg handler2"></div>
+
+
+    <div id="root" style="border: 1px solid red;width: 500px;height: 700px">
+        <div class=" handler_ok_bg handler2"></div>
+    </div>
 </div>
 <script src="../js/lib/jquery-1.10.2.js"></script>
 <script type="text/javascript">
@@ -93,12 +99,14 @@
             isMove: false,
             x: 0,
             y: 0,
-            isX:false,
-            isY:false,
-            isAll:true,
-            dragMove:function () {
+            isX: false,
+            isY: false,
+            isAll: true,
+            root: null,
+            isRoot: false,
+            dragMove: function () {
             }
-        }
+        };
 
         function Drag(ele, opt) {
             this.ele = ele;
@@ -109,11 +117,13 @@
         Drag.prototype.init = function () {
             var that = this,
                 opt = that.opt;
+
+
             that.ele.on('mousedown', function (e) {
-                var offset = $(this).offset();
+                var position = $(this).position();
                 that.ele.css('cursor', 'move');
-                opt.x = e.pageX - offset.left;
-                opt.y = e.pageY - offset.top;
+                opt.x = e.pageX - position.left;
+                opt.y = e.pageY - position.top;
                 opt.isMove = true;
                 e.preventDefault();
                 $(document).on('mouseup.' + opt.version, function (e) {
@@ -123,17 +133,45 @@
                 });
             });
 
+            if (opt.root && opt.isRoot) {
+                opt.root.css('position', 'relative');
+            }
         }
         Drag.prototype.start = function (e) {
             var that = this,
-                opt = that.opt;
-            if (!opt.isMove) return false;
-            that.ele.css({
-                left: e.pageX - opt.x,
-                top: e.pageY - opt.y
-            });
-
+                opt = that.opt,
+                left = e.pageX - opt.x,
+                top = e.pageY - opt.y;
             e.preventDefault();
+
+            if (!opt.isMove) return false;
+
+            if (opt.root && opt.isRoot) {
+                if (!that.contains(left, top)) {
+                    return false;
+                }
+            }
+            if (opt.isX) {
+                that.ele.css({
+                    left: left
+                });
+                return false;
+            }
+            if (opt.isY) {
+                that.ele.css({
+                    top: top
+                });
+                return false;
+            }
+            if (opt.isAll) {
+                that.ele.css({
+                    left: left,
+                    top: top
+                });
+                return false;
+            }
+
+
         }
         Drag.prototype.stop = function (e) {
             var that = this,
@@ -143,13 +181,24 @@
             $(document).off('.' + opt.version);
             e.preventDefault();
         }
+        Drag.prototype.contains = function (x, y) {
+            var that = this,
+                opt = that.opt;
+            if (!(opt.root && opt.isRoot)) return false;
+            var offset = opt.root.offset();
+            return (0 <= x <=  opt.root.innerWidth()) && (0 <= y <= opt.root.innerHeight());
+        }
         w.Drag = Drag;
     })(window);
 
     (function () {
         var drag = new Drag($('.handler'));
         drag.init();
-        var drag2 = new Drag($('.handler2'));
+        var drag2 = new Drag($('.handler2'),{
+            root:$('#root'),
+            isRoot:true,
+            isX:true
+        });
         drag2.init();
     })();
 
