@@ -23,7 +23,7 @@
                 }
             },
             this.options = $.extend({}, this.defaults, opt)
-    }
+    };
     //定义方法
     Drag.prototype = {
         run: function () {
@@ -185,5 +185,5 @@
         //调用方法
         drag.run();
         return this;
-    }
+    };
 })(jQuery, window, document);

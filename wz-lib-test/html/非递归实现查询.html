@@ -6,7 +6,7 @@
 </head>
 <body>
 
-
+<script src="../js/lib/jquery-1.10.2.js"></script>
 <script>
     function formatNode() {
         var zNodes = [
@@ -24,18 +24,38 @@
             {id: 222, pId: 22, name: "随意勾选 2-2-2"},
             {id: 23, pId: 2, name: "随意勾选 2-3"}
         ];
-        var i, l,
-            key = 'id',
-            parentKey = 'pId',
-            childKey = 'children';
-        var r = [];
-        var tmpMap = {};
-        console.log(treeFormatNode(zNodes));
+
     }
 
 
-    function formatNode2() {
-
+    function formatNode2(zNodes) {
+        var i, l, j,
+            key = 'id',
+            parentKey = 'pId',
+            childKey = 'children';
+        var isIn = false;//判断当前节点 是否有 父节点，如果没有父节点，则表名 它是根节点
+        var r = [];
+        for (i = 0; i < zNodes.length; i++) {
+            for (j = 0; j < zNodes.length; j++) {
+                if (j == i) {
+                    continue;
+                }
+                if (zNodes[i][parentKey] === zNodes[j][key]) {
+                    if (zNodes[j][childKey] === undefined) {
+                        zNodes[j][childKey] = [];
+                    }
+                    zNodes[j][childKey].push(zNodes[i]);//一个子节点只能对应 一个父节点
+                    isIn = true;
+                    break;
+                }
+            }
+            if (isIn === false) {
+                r.push(zNodes[i]);
+            }
+            isIn = false;
+        }
+        console.log(r);
+        return r;
     }
 
     function treeFormatNode(sNodes) {
@@ -63,7 +83,38 @@
     }
 
 
-    formatNode();
+</script>
+
+<script>
+    $(function () {
+        var array = [{
+            id: 1,
+            name: '1'
+        }, {
+            id: 2,
+            name: '2'
+        }, {
+            id: 3,
+            name: '3'
+
+        }];
+
+        var result = $.grep(array, function (n, i) {
+            // console.log(n);
+            return n.id > 1;
+        });
+
+        var b = $.map({a:1,b:2}, function (n, i) {
+            console.log(n);
+            console.log(i);
+            return n;
+        });
+        console.log(b);
+
+        console.log(result);
+
+    });
+
 
 </script>
 </body>

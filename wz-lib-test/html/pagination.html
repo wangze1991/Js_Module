@@ -11,19 +11,19 @@
     </div>
 </div>
 <script src="../js/lib/jquery-1.10.2.js"></script>
-<script src="../js/pagination.js"></script>
+<script src="../js/pagination/p2.js"></script>
 <script>
     $(function () {
         $('#test').pagination({
-            totalPage: 50,
-            showPage: 4
+            totalPage: 10,
+            showPage: 7
         });
         function page() {
             var url = '';
             ajaxPage(function (data) {
                 $('#test').pagination({
-                    totalPage: 50,
-                    showPage: 4,
+                    totalPage: 20,
+                    showPage: 5,
                     jump:innerPage
                 });
             });

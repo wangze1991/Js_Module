@@ -6,11 +6,29 @@
         });
 
     };
+
+    $.fn.pagination.defaults = {
+        totalPage: 0,
+        count: 0,//总条数
+        limit: 10,//每页显示的总条数
+        prev: '上一页',
+        next: '下一页',
+        first: '首页',
+        last: '尾页',
+        showPage: 5,
+        isAjax: true,
+        isHash: false,
+        jump: function (page) {
+        }//回调事件
+    };
+
     function Pagination(ele, option) {
         this.opt = $.extend({}, $.fn.pagination.defaults, option);
         this.ele = ele;
         console.log(this.opt);
     }
+
+
     var proto = Pagination.prototype;
     /**
      * 初始化分页控件
@@ -47,19 +65,13 @@
 
     };
 
-    $.fn.pagination.defaults = {
-        totalPage: 0,
-        count: 0,//总条数
-        limit: 10,//每页显示的总条数
-        prev: '上一页',
-        next: '下一页',
-        first: '首页',
-        last: '尾页',
-        showPage: 7,
-        jump: function (page) {
-        }//回调事件
-    };
-
+    function enumerate(begin, end) {
+        var array = [];
+        for (var i = begin; i <= end; i++) {
+            array.push(i);
+        }
+        return array;
+    }
 
     /***
      * 添加html
@@ -68,38 +80,45 @@
      * @param jump
      */
     function appendHtml(currentPage, opt, ele) {
-        var totalPage = opt.totalPage ? opt.totalPage : Math.ceil(opt.count / opt.limit),//获取总页数
-            halfPage = Math.floor(opt.showPage / 2),
-            largePage = totalPage - opt.showPage + halfPage;
+        var totalPage = opt.totalPage ? opt.totalPage : Math.ceil(opt.count / opt.limit);//获取总页数
+        var showPage = opt.showPage;
+        var interval = Math.floor(showPage/2);
+        console.log(interval)
         var html = [
             '<div class="page">',
             '<div class="pagelist">'
         ];
+        //判断当前是首页
         var prevDisabled = currentPage === 1 ? 'disabled' : '';
         html.push('<span class="jump ' + prevDisabled + '">' + opt.prev + '</span>');
-        //判断跳转是否大于5或者跳转页数  totalpage-showpage+Math.floor(showpage/2)
-        //当 当前页 大于5的时候，才考虑特殊分页
-        // if (currentPage <= 5 || totalPage <= opt.showPage) {
-        if (currentPage <=opt.showPage || totalPage <= opt.showPage) {
-            for (var i = 0; i < opt.showPage; i++) {
-                html.push('<span class="jump">' + (i + 1) + '</span>');
-            }
-            if (totalPage > opt.showPage) {
+        html.push('<span class="jump ">1</span>');
+        if (showPage >= totalPage) {
+            enumerate(2, totalPage-1).forEach(function (i) {
+                html.push('<span class="jump">' + i + '</span>');
+            });
+        } else {
+            //判断前面不需要...
+            if (currentPage - interval - 1 <= 1) {
+                enumerate(2, showPage).forEach(function (i) {
+                    html.push('<span class="jump">' + i + '</span>');
+                });
                 html.push('<span class="ellipsis" style="">...</span>');
             }
-        } else {
-            //当页数大于5的时候，默认显示第一页
-            html.push('<span class="jump">1</span>');
-            html.push('<span class="ellipsis" style="">...</span>');
-            //当前页数在总页数的前半段的时候
-            if (currentPage < largePage) {
-                for (var j = currentPage - halfPage; j <= currentPage + halfPage; j++) {
-                    html.push('<span class="jump">' + j + '</span>');
+            else {
+                html.push('<span class="ellipsis" style="">...</span>');
+                //判断是否分页到末尾
+                if (totalPage - currentPage - interval > 1) {
+                    enumerate(currentPage - interval, currentPage + interval >= totalPage ? totalPage : currentPage + interval).forEach(function (i) {
+                        html.push('<span class="jump">' + i + '</span>');
+                    });
+                    if (totalPage - currentPage - interval > 1) {
+                        html.push('<span class="ellipsis" style="">...</span>');
+                    }
                 }
-                html.push('<span class="ellipsis">...</span>');
-            } else {
-                for (var k = totalPage - opt.showPage + 1; k <= totalPage; k++) {
-                    html.push('<span class="jump">' + k + '</span>');
+                else {
+                    enumerate(totalPage - showPage + 1, totalPage - 1).forEach(function (i) {
+                        html.push('<span class="jump">' + i + '</span>');
+                    });
                 }
             }
         }

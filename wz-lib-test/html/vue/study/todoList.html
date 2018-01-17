@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            font-family: "微软雅黑";
+            font-size: 14px;
+        }
+
+        input {
+            font-size: 14px;
+        }
+
+        body, ul, div, html {
+            padding: 0;
+            margin: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .main {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        li {
+            list-style-type: none;
+            line-height: 40px;
+            position: relative;
+            border: 1px solid transparent;
+            padding: 0 20px;
+        }
+
+        li .type-span {
+            display: block;
+            width: 10px;
+            height: 10px;
+            background: #ccc;
+            margin: 14px 10px 0 0;
+            float: left;
+        }
+
+        li .status-span {
+            display: block;
+            width: 10px;
+            height: 10px;
+            background: #ccc;
+            margin: 14px 10px 0 0;
+            float: left;
+        }
+
+        li .status-span.status-end {
+            background: #09f;
+        }
+
+        li .close {
+            position: absolute;
+            color: #f00;
+            font-size: 20px;
+            line-height: 40px;
+            height: 40px;
+            right: 20px;
+            cursor: pointer;
+            display: none;
+            top: 0;
+        }
+
+        li:hover {
+            border: 1px solid #09f;
+        }
+
+        li:hover .close {
+            display: block;
+        }
+
+        li .text-keyword {
+            height: 40px;
+            padding-left: 10px;
+            box-sizing: border-box;
+            margin-left: 10px;
+            width: 80%;
+            display: none;
+        }
+
+        .text-keyword {
+            box-sizing: border-box;
+            width: 100%;
+            height: 40px;
+            padding-left: 10px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="main">
+    <h2>小目标列表</h2>
+    <div class="list">
+        <h3>添加小目标</h3>
+        <input type="text" class="text-keyword" placeholder="输入小目标后，按回车确认" v-on:keyup.enter="addTarget($event)"
+               v-model="targetValue"/>
+        <p>共有{{target.length}}个目标</p>
+        <p>
+            <input type="radio" name="chooseType" checked="true" value="1" @click="chooseList(1)"/><label>所有目标</label>
+            <input type="radio" name="chooseType" value="2" @click="chooseList(2)"/><label>已完成目标</label>
+            <input type="radio" name="chooseType" value="3" @click="chooseList(3)"/><label>未完成目标</label>
+        </p>
+    </div>
+    <ul>
+        <li class="li1" v-for="(item,index) in newList">
+            <div>
+                <!--status-span status-end-->
+                <span class="type-span" :class="{'status-span':item.isFinish,'status-end':item.isFinish}"
+                      @click.prevent="item.isFinish=!item.isFinish"></span>
+                <span @dblclick="">{{item.targetName}}</span>
+                <span class="close" @click.prevent="del(index)">X</span>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="../../../js/lib/vue.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data: {
+            targetValue: '',
+            target: [],
+            newList: []
+        },
+        computed: {},
+        methods: {
+            addTarget(event) {
+                var self = this;
+                if (!self.targetValue) {
+                    alert('请输入目标');
+                    return;
+                }
+                debugger;
+                self.target.push({targetName: self.targetValue, isFinish: false});
+                self.newList = self.target;
+                self.targetValue = '';
+            },
+            del(index) {
+                this.target.splice(index, 1);
+            },
+            dbClickEdit: function () {
+
+            },
+            chooseList: function (type) {
+                switch (type) {
+                    case 1:
+                        this.newList = this.target;
+                        break;
+                    case 2:
+                        this.newList = this.target.filter(function (item) {
+                            return item.isFinish
+                        });
+                        break;
+                    case 3:
+                        this.newList = this.target.filter(function (item) {
+                            return !item.isFinish
+                        });
+                        break;
+                }
+            }
+
+
+        }
+    });
+</script>
+</html>
