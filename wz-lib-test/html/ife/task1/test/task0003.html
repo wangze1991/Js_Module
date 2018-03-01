@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #divA {
+            width: 200px;
+            background-color: red;
+            float: left;
+            height: 100px;
+        }
+
+        #divB {
+            height: 100px;
+            background-color: #888888;
+        }
+
+        #div2 {
+            position: relative;
+        }
+
+        #divC {
+            position: absolute;
+            width: 200px;
+            background-color: blue;
+            height: 100px
+        }
+
+        #divD {
+            margin-left: 200px;
+            background-color: red;
+            height: 100px;
+        }
+
+        #divE {
+            float: left;
+            width: 200px;
+            background-color: blue;
+            height: 100px
+        }
+
+        #divF {
+            float: left;
+            background-color: red;
+            height: 100px;
+            width: 100%;
+        }
+
+        #box5 {
+            float: left;
+            margin-top: 50px;
+            background-color: #34ED16;
+            width: 100%;
+            height: 50px;
+        }
+
+        #box6 {
+            float: left;
+            background-color: blue;
+            width: 300px;
+            height: 50px;
+            margin: 50px 0 0 -100%;
+            position: relative;
+            left: -300px;
+        }
+
+        #box7 {
+            float: right;
+            background-color: aquamarine;
+            width: 400px;
+            height: 50px;
+            margin: 50px -400px 0 0;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <div id="divA">
+        <span>divA</span>
+
+    </div>
+    <div id="divB">
+        <span>divB</span>
+    </div>
+</div>
+
+<div id="div-2">
+    <div id="divC">123123</div>
+    <div id="divD">123</div>
+</div>
+<div id="div-3">
+    <div id="divE">123123</div>
+    <div id="divF">123</div>
+</div>
+<div>
+    <div style="display: inline-block;width: 200px;height:200px ;vertical-align: top ;background-color: #888888"></div>
+    <div style="display: inline-block;vertical-align: top ;height:200px ;background-color: #1e1e1e;float: right;"></div>
+</div>
+<div style="padding: 0 400px 0 300px;" class="box">
+    <div id="box5">box5</div>
+    <div id="box6">box6</div>
+    <div id="box7">box7</div>
+</div>
+<div class="box">
+    <div id="box9"></div>
+</div>
+</body>
+</html>

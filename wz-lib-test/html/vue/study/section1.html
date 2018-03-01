@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+
+<div id="app">{{message}}</div>
+<div id="app-2">
+  <span v-bind:title="message">
+    鼠标悬停几秒钟查看此处动态绑定的提示信息！{{message}}
+  </span>
+</div>
+<button v-on:click="alert" id="app4">点击</button>
+<div id="app-3" v-bind:class="{active:isActive}" v-bind:style="styleObject">
+    class 属性绑定
+    <h1 v-if="ok">Yes</h1>
+    <h1 v-else>No</h1>
+
+    <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username">
+    </template>
+    <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address">
+    </template>
+    <button v-on:click="toggleClick">toggle</button>
+</div>
+<div id="app-5">
+    <div >{{total}}</div>
+    <button-counter></button-counter>
+</div>
+
+<script src="../../../js/lib/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        }
+    });
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            message: '页面加载于 ' + new Date().toLocaleString()
+        }
+    });
+    var app = new Vue({
+        el: '#app4',
+        data: {
+            message: 'Hello Vue!'
+        },
+        methods: {
+            alert: function () {
+                window.alert(1);
+            }
+        }
+    });
+
+    var testData = {
+        isActive: true,
+        styleObject: {
+            color: 'red',
+            border: '1px solid #ccc'
+        },
+        loginType: 'username',
+        ok: false
+    };
+
+    var app3 = new Vue({
+        el: '#app-3',
+        data:testData,
+        methods: {
+            toggleClick: function () {
+                if (this.loginType === 'username') {
+                    this.loginType = 'email';
+                } else {
+                    this.loginType = 'username';
+                }
+            }
+
+        }
+    });
+    console.log(app3.styleObject===testData.styleObject);
+    console.log(app3.$data===testData);
+
+    // var Child = {
+    //     template: '<div>A custom component!</div>'
+    // }
+    // new Vue({
+    //     el:'#app-5',
+    //     components: {
+    //         // <my-component> 将只在父模板可用
+    //         'my-component': Child
+    //     }
+    // });
+
+    Vue.component('button-counter',{
+        template:'<button  v-on:click="increment">{{counter}}</button>',
+        data:function () {
+            return {counter:0}
+        },
+        methods:{
+            increment:function () {
+                this.counter+=1;
+                this.$emit('increment')
+            }
+        }
+
+    });
+    var app5=new Vue({
+        el:'#app-5',
+        data:{
+            total:0
+        },
+        methods:{
+            increaseTotal:function () {
+                this.total+=1;
+            }
+        }
+    });
+
+    setTimeout(function(){
+        app5.total=4;
+    },1000);
+
+</script>
+</body>
+</html>
