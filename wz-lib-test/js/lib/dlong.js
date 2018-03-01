@@ -6,25 +6,25 @@
  *      null
  */
 var xc = {
-	Browser: {},                // 浏览器检测
-	Global: {                   // 全局对象
+    Browser: {},                // 浏览器检测
+    Global: {                   // 全局对象
 
     },
-	GoTo: {},                   // 页面滚动
-	Label: {},                  // 提示标签
+    GoTo: {},                   // 页面滚动
+    Label: {},                  // 提示标签
     Confirm: {},                // 提示对话框
-	Slider: {},                 // 滑动块
-	Utils: {},                  // 工具类
-	Controls: {                 // 控件集
-		CImages:{}              //    图片展示
-	},
-	Share: {                    // 页面公用
-		Common: {}              //    页面效果公用模块
-	},
-	App: {                      // 页面效果
-		Index: {},              //    首页index.js
-		HotIndex:{}             //    热门博主&热门博文
-	}
+    Slider: {},                 // 滑动块
+    Utils: {},                  // 工具类
+    Controls: {                 // 控件集
+        CImages: {}              //    图片展示
+    },
+    Share: {                    // 页面公用
+        Common: {}              //    页面效果公用模块
+    },
+    App: {                      // 页面效果
+        Index: {},              //    首页index.js
+        HotIndex: {}             //    热门博主&热门博文
+    }
 };
 window.XC = xc;
 /**
@@ -229,137 +229,138 @@ window.XC = xc;
  *      无
  */
 
-(function() {
-	var exports = {};
+(function () {
+    var exports = {};
 
-	var BrowserDetect = {
-		searchString: function(data) {
-			for (var i = 0; i < data.length; i++) {
-				var dataString = data[i].string;
-				var dataProp = data[i].prop;
-				this.versionSearchString = data[i].versionSearch || data[i].identity;
-				if (dataString) {
-					if (dataString.indexOf(data[i].subString) != -1)
-						return data[i].identity;
-				} else if (dataProp)
-					return data[i].identity;
-			}
-		},
-		searchVersion: function(dataString) {
-			var index = dataString.indexOf(this.versionSearchString);
-			if (index == -1) return;
-			return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
-		},
-		dataBrowser: [
-			{
-				string: navigator.userAgent,
-				subString: "Chrome",
-				identity: "Chrome"
-			},
-			{    string: navigator.userAgent,
-				subString: "OmniWeb",
-				versionSearch: "OmniWeb/",
-				identity: "OmniWeb"
-			},
-			{
-				string: navigator.vendor,
-				subString: "Apple",
-				identity: "Safari",
-				versionSearch: "Version"
-			},
-			{
-				prop: window.opera,
-				identity: "Opera",
-				versionSearch: "Version"
-			},
-			{
-				string: navigator.vendor,
-				subString: "iCab",
-				identity: "iCab"
-			},
-			{
-				string: navigator.vendor,
-				subString: "KDE",
-				identity: "Konqueror"
-			},
-			{
-				string: navigator.userAgent,
-				subString: "Firefox",
-				identity: "Firefox"
-			},
-			{
-				string: navigator.vendor,
-				subString: "Camino",
-				identity: "Camino"
-			},
-			{		// for newer Netscapes (6+)
-				string: navigator.userAgent,
-				subString: "Netscape",
-				identity: "Netscape"
-			},
-			{
-				string: navigator.userAgent,
-				subString: "MSIE",
-				identity: "Explorer",
-				versionSearch: "MSIE"
-			},
-			{
-				string: navigator.userAgent,
-				subString: "Gecko",
-				identity: "Mozilla",
-				versionSearch: "rv"
-			},
-			{ 		// for older Netscapes (4-)
-				string: navigator.userAgent,
-				subString: "Mozilla",
-				identity: "Netscape",
-				versionSearch: "Mozilla"
-			}
-		],
-		dataOS: [
-			{
-				string: navigator.platform,
-				subString: "Win",
-				identity: "Windows"
-			},
-			{
-				string: navigator.platform,
-				subString: "Mac",
-				identity: "Mac"
-			},
-			{
-				string: navigator.userAgent,
-				subString: "iPhone",
-				identity: "iPhone/iPod"
-			},
-			{
-				string: navigator.platform,
-				subString: "Linux",
-				identity: "Linux"
-			}
-		]
-	};
+    var BrowserDetect = {
+        searchString: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var dataString = data[i].string;
+                var dataProp = data[i].prop;
+                this.versionSearchString = data[i].versionSearch || data[i].identity;
+                if (dataString) {
+                    if (dataString.indexOf(data[i].subString) != -1)
+                        return data[i].identity;
+                } else if (dataProp)
+                    return data[i].identity;
+            }
+        },
+        searchVersion: function (dataString) {
+            var index = dataString.indexOf(this.versionSearchString);
+            if (index == -1) return;
+            return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
+        },
+        dataBrowser: [
+            {
+                string: navigator.userAgent,
+                subString: "Chrome",
+                identity: "Chrome"
+            },
+            {
+                string: navigator.userAgent,
+                subString: "OmniWeb",
+                versionSearch: "OmniWeb/",
+                identity: "OmniWeb"
+            },
+            {
+                string: navigator.vendor,
+                subString: "Apple",
+                identity: "Safari",
+                versionSearch: "Version"
+            },
+            {
+                prop: window.opera,
+                identity: "Opera",
+                versionSearch: "Version"
+            },
+            {
+                string: navigator.vendor,
+                subString: "iCab",
+                identity: "iCab"
+            },
+            {
+                string: navigator.vendor,
+                subString: "KDE",
+                identity: "Konqueror"
+            },
+            {
+                string: navigator.userAgent,
+                subString: "Firefox",
+                identity: "Firefox"
+            },
+            {
+                string: navigator.vendor,
+                subString: "Camino",
+                identity: "Camino"
+            },
+            {		// for newer Netscapes (6+)
+                string: navigator.userAgent,
+                subString: "Netscape",
+                identity: "Netscape"
+            },
+            {
+                string: navigator.userAgent,
+                subString: "MSIE",
+                identity: "Explorer",
+                versionSearch: "MSIE"
+            },
+            {
+                string: navigator.userAgent,
+                subString: "Gecko",
+                identity: "Mozilla",
+                versionSearch: "rv"
+            },
+            { 		// for older Netscapes (4-)
+                string: navigator.userAgent,
+                subString: "Mozilla",
+                identity: "Netscape",
+                versionSearch: "Mozilla"
+            }
+        ],
+        dataOS: [
+            {
+                string: navigator.platform,
+                subString: "Win",
+                identity: "Windows"
+            },
+            {
+                string: navigator.platform,
+                subString: "Mac",
+                identity: "Mac"
+            },
+            {
+                string: navigator.userAgent,
+                subString: "iPhone",
+                identity: "iPhone/iPod"
+            },
+            {
+                string: navigator.platform,
+                subString: "Linux",
+                identity: "Linux"
+            }
+        ]
+    };
 
-	/**
-	 * 操作系统名称
-	 * Windows | Mac | iPhone/iPod | Linux | an unknown OS
-	 */
-	exports.os = BrowserDetect.searchString(BrowserDetect.dataOS) || "an unknown OS";
+    /**
+     * 操作系统名称
+     * Windows | Mac | iPhone/iPod | Linux | an unknown OS
+     */
+    exports.os = BrowserDetect.searchString(BrowserDetect.dataOS) || "an unknown OS";
 
-	/**
-	 * 浏览器名称
-	 * Chrome | Safari | Opera | Firefox | Explorer
-	 * OmniWeb | iCab | Konqueror | Camino | Netscape | Mozilla | An unknown browser
-	 */
-	exports.name = BrowserDetect.searchString(BrowserDetect.dataBrowser) || "An unknown browser";
+    /**
+     * 浏览器名称
+     * Chrome | Safari | Opera | Firefox | Explorer
+     * OmniWeb | iCab | Konqueror | Camino | Netscape | Mozilla | An unknown browser
+     */
+    exports.name = BrowserDetect.searchString(BrowserDetect.dataBrowser) || "An unknown browser";
 
-	/**
-	 * 浏览器版本
-	 * version | an unknown version
-	 */
-	exports.version = BrowserDetect.searchVersion(navigator.userAgent) || BrowserDetect.searchVersion(navigator.appVersion) || "an unknown version";
+    /**
+     * 浏览器版本
+     * version | an unknown version
+     */
+    exports.version = BrowserDetect.searchVersion(navigator.userAgent) || BrowserDetect.searchVersion(navigator.appVersion) || "an unknown version";
 
-	window.XC.Browser = exports;
+    window.XC.Browser = exports;
 })();
 /**
  * @description 页面滚动
@@ -370,160 +371,160 @@ window.XC = xc;
  *      utils
  */
 
-(function($, Utils) {
-	var exports = {};
-	var $body = $('html,body');
+(function ($, Utils) {
+    var exports = {};
+    var $body = $('html,body');
 
-	/**
-	 * 页面滚动指定距离
-	 * @param far 距离
-	 * @param opts 参数(second)
-	 * @returns {promise}
-	 */
-	exports.far = function(far, opts) {
-		// 默认参数
-		var options = {
-			second: 500
-		};
-		$.extend(options, opts);
+    /**
+     * 页面滚动指定距离
+     * @param far 距离
+     * @param opts 参数(second)
+     * @returns {promise}
+     */
+    exports.far = function (far, opts) {
+        // 默认参数
+        var options = {
+            second: 500
+        };
+        $.extend(options, opts);
 
-		var animatePromise = $body.animate({scrollTop: far}, options.second).promise();
-		return animatePromise;
-	};
+        var animatePromise = $body.animate({scrollTop: far}, options.second).promise();
+        return animatePromise;
+    };
 
-	/**
-	 * 页面滚动指定距离
-	 * @param $trigger 触发器
-	 * @param opts 参数(second)
-	 */
-	exports.farWith = function($trigger, far, opts) {
-		$trigger = Utils.jquery($trigger);
-		$trigger.click(function() {
-			exports.far(far, opts);
-			return false;
-		});
-	};
+    /**
+     * 页面滚动指定距离
+     * @param $trigger 触发器
+     * @param opts 参数(second)
+     */
+    exports.farWith = function ($trigger, far, opts) {
+        $trigger = Utils.jquery($trigger);
+        $trigger.click(function () {
+            exports.far(far, opts);
+            return false;
+        });
+    };
 
-	/**
-	 * 前往顶部
-	 * @param opts 参数(second)
-	 * @returns {promise}
-	 */
-	exports.top = function(opts) {
-		return exports.far(0, opts);
-	};
+    /**
+     * 前往顶部
+     * @param opts 参数(second)
+     * @returns {promise}
+     */
+    exports.top = function (opts) {
+        return exports.far(0, opts);
+    };
 
-	/**
-	 * 前往顶部
-	 * @param $trigger 触发器
-	 * @param opts 参数(second)
-	 */
-	exports.topWith = function($trigger, opts) {
-		$trigger = Utils.jquery($trigger);
-		$trigger.click(function() {
-			exports.top(opts);
-			return false;
-		});
-	};
+    /**
+     * 前往顶部
+     * @param $trigger 触发器
+     * @param opts 参数(second)
+     */
+    exports.topWith = function ($trigger, opts) {
+        $trigger = Utils.jquery($trigger);
+        $trigger.click(function () {
+            exports.top(opts);
+            return false;
+        });
+    };
 
-	/**
-	 * 前往中间
-	 * @param opts 参数(second)
-	 * @returns {promise}
-	 */
-	exports.middle = function(opts) {
-		var m = $body.height() / 2;
-		return exports.far(m, opts);
-	};
+    /**
+     * 前往中间
+     * @param opts 参数(second)
+     * @returns {promise}
+     */
+    exports.middle = function (opts) {
+        var m = $body.height() / 2;
+        return exports.far(m, opts);
+    };
 
-	/**
-	 * 前往中间
-	 * @param $trigger 触发器
-	 * @param opts 参数(second)
-	 */
-	exports.middleWith = function($trigger, opts) {
-		$trigger = Utils.jquery($trigger);
-		$trigger.click(function() {
-			exports.middle(opts);
-			return false;
-		});
-	};
+    /**
+     * 前往中间
+     * @param $trigger 触发器
+     * @param opts 参数(second)
+     */
+    exports.middleWith = function ($trigger, opts) {
+        $trigger = Utils.jquery($trigger);
+        $trigger.click(function () {
+            exports.middle(opts);
+            return false;
+        });
+    };
 
-	/**
-	 * 前往底部
-	 * @param opts 参数(second)
-	 * @returns {promise}
-	 */
-	exports.bottom = function(opts) {
-		var b = $body.height();
-		return exports.far(b, opts);
-	};
+    /**
+     * 前往底部
+     * @param opts 参数(second)
+     * @returns {promise}
+     */
+    exports.bottom = function (opts) {
+        var b = $body.height();
+        return exports.far(b, opts);
+    };
 
-	/**
-	 * 前往底部
-	 * @param $trigger 触发器
-	 * @param opts 参数(second)
-	 */
-	exports.bottomWith = function($trigger, opts) {
-		$trigger = Utils.jquery($trigger);
-		$trigger.click(function() {
-			exports.bottom(opts);
-			return false;
-		});
-	};
+    /**
+     * 前往底部
+     * @param $trigger 触发器
+     * @param opts 参数(second)
+     */
+    exports.bottomWith = function ($trigger, opts) {
+        $trigger = Utils.jquery($trigger);
+        $trigger.click(function () {
+            exports.bottom(opts);
+            return false;
+        });
+    };
 
-	/**
-	 * 每次页面滚动距离
-	 * @param distance 滚动距离
-	 * @param opts 参数(second)
-	 * @returns {promise}
-	 */
-	exports.every = function(distance, opts) {
-		var d = $body.scrollTop() + distance;
-		return exports.far(d, opts);
-	};
+    /**
+     * 每次页面滚动距离
+     * @param distance 滚动距离
+     * @param opts 参数(second)
+     * @returns {promise}
+     */
+    exports.every = function (distance, opts) {
+        var d = $body.scrollTop() + distance;
+        return exports.far(d, opts);
+    };
 
-	/**
-	 * 每次页面滚动距离
-	 * @param $trigger 触发器
-	 * @param distance 滚动距离
-	 * @param opts 参数(second)
-	 */
-	exports.everyWith = function($trigger, distance, opts) {
-		$trigger = Utils.jquery($trigger);
-		$trigger.click(function() {
-			exports.every(distance, opts);
-			return false;
-		});
-	};
+    /**
+     * 每次页面滚动距离
+     * @param $trigger 触发器
+     * @param distance 滚动距离
+     * @param opts 参数(second)
+     */
+    exports.everyWith = function ($trigger, distance, opts) {
+        $trigger = Utils.jquery($trigger);
+        $trigger.click(function () {
+            exports.every(distance, opts);
+            return false;
+        });
+    };
 
-	/**
-	 * 前往DOM
-	 * @param $target 目标DOM
-	 * @param opts 参数(second)
-	 * @returns {promise}
-	 */
-	exports.dom = function($target, opts) {
-		var $target = Utils.jquery($target);
-		var t = $target.offset().top;
-		return exports.far(t, opts);
-	};
+    /**
+     * 前往DOM
+     * @param $target 目标DOM
+     * @param opts 参数(second)
+     * @returns {promise}
+     */
+    exports.dom = function ($target, opts) {
+        var $target = Utils.jquery($target);
+        var t = $target.offset().top;
+        return exports.far(t, opts);
+    };
 
-	/**
-	 * 前往DOM
-	 * @param $trigger 触发器
-	 * @param $target 目标DOM
-	 * @param opts 参数(second)
-	 */
-	exports.domWith = function($trigger, $target, opts) {
-		$trigger = Utils.jquery($trigger);
-		$trigger.click(function() {
-			exports.dom($target, opts);
-			return false;
-		});
-	};
+    /**
+     * 前往DOM
+     * @param $trigger 触发器
+     * @param $target 目标DOM
+     * @param opts 参数(second)
+     */
+    exports.domWith = function ($trigger, $target, opts) {
+        $trigger = Utils.jquery($trigger);
+        $trigger.click(function () {
+            exports.dom($target, opts);
+            return false;
+        });
+    };
 
-	window.XC.GoTo = exports;
+    window.XC.GoTo = exports;
 })(window.jQuery, window.XC.Utils);
 /**
  * @description 提示标签。
@@ -671,7 +672,6 @@ window.XC = xc;
 })(window.jQuery, window.XC.Utils);
 
 
-
 /**
  * @description 滑动条效果
  * @author 史进
@@ -681,35 +681,33 @@ window.XC = xc;
  *      utils
  */
 
-(function($, Utils) {
-	var exports = {};
+(function ($, Utils) {
+    var exports = {};
 
-	/**
-	 * 菜单hover切换
-	 * @param el 菜单对象
-	 */
-	exports.nav = function(el) {
-		if (!el) el = '.nav';
-		var $nav = Utils.jquery(el);
+    /**
+     * 菜单hover切换
+     * @param el 菜单对象
+     */
+    exports.nav = function (el) {
+        if (!el) el = '.nav';
+        var $nav = Utils.jquery(el);
 
-		var $selectedItem = $('.current', $nav);
-		$nav.mouseleave(function() {
-			$selectedItem.addClass('current');
-			$selectedItem.siblings().removeClass('current');
-		});
+        var $selectedItem = $('.current', $nav);
+        $nav.mouseleave(function () {
+            $selectedItem.addClass('current');
+            $selectedItem.siblings().removeClass('current');
+        });
 
-		var $list = $nav.find('li');
-		$list.mouseenter(function() {
-			var $item = $(this);
-			$item.addClass('current');
-			$item.siblings().removeClass('current');
-		});
-	};
+        var $list = $nav.find('li');
+        $list.mouseenter(function () {
+            var $item = $(this);
+            $item.addClass('current');
+            $item.siblings().removeClass('current');
+        });
+    };
 
-	window.XC.Slider = exports;
+    window.XC.Slider = exports;
 })(window.jQuery, window.XC.Utils);
-
-
 
 
 /**
@@ -806,11 +804,11 @@ window.XC = xc;
                         top: (winHeight - 200) / 2
                     }, 700).promise();
                     var nPromise = $next.animate({
-                        width: parseInt(w)+'px',
-                        height: parseInt(h)+'px',
+                        width: parseInt(w) + 'px',
+                        height: parseInt(h) + 'px',
                         opacity: 1,
                         left: (winWidth - parseInt(w)) / 2,
-                        top: (winHeight - parseInt(h) ) / 2
+                        top: (winHeight - parseInt(h)) / 2
                     }, 700).promise();
                     $.when(cPromise, nPromise).done(function () {
                         $current.css({
@@ -858,11 +856,11 @@ window.XC = xc;
                 top: (winHeight - 200) / 2
             });
             var pPromise = $prev.animate({
-                width: parseInt(w)+'px',
-                height: parseInt(h)+'px',
+                width: parseInt(w) + 'px',
+                height: parseInt(h) + 'px',
                 opacity: 1,
                 left: (winWidth - parseInt(w)) / 2,
-                top: (winHeight - parseInt(h) ) / 2
+                top: (winHeight - parseInt(h)) / 2
             }, 700).promise();
             $.when(cPormise, pPromise).done(function () {
                 $current.css({
@@ -907,8 +905,8 @@ window.XC = xc;
                 top: (winHeight - 200) / 2
             }, 700).promise();
             var nPromise = $next.animate({
-                width: parseInt(w)+'px',
-                height: parseInt(h)+'px',
+                width: parseInt(w) + 'px',
+                height: parseInt(h) + 'px',
                 opacity: 1,
                 left: (winWidth - parseInt(w)) / 2,
                 top: (winHeight - parseInt(h)) / 2
@@ -960,20 +958,18 @@ window.XC = xc;
             h = h * maxW / w;
             w = maxW;
         }
-        console.log(w+','+h);
+        console.log(w + ',' + h);
         $current.css({
-            'width': parseInt(w)+'px',
-            'height': parseInt(h)+'px',
+            'width': parseInt(w) + 'px',
+            'height': parseInt(h) + 'px',
             left: (winWidth - parseInt(w)) / 2,
-            top: (winHeight - parseInt(h) ) / 2
+            top: (winHeight - parseInt(h)) / 2
         });
 
         // 设置图片
         var $img = $current.find('img');
         $img.attr('src', root + 'small/small_' + c_image.image);
         $img.attr('data-original', root + 'small/middle_' + c_image.image);
-
-
 
 
         var $prev = $('.c_images_prev', $CImages);
@@ -992,10 +988,6 @@ window.XC = xc;
             $next.hide();
             n_image = null;
         }
-
-
-
-
 
 
         $current.find('p').first().html(c_image.desc).width(w).attr('title', c_image.desc);

@@ -1,0 +1,342 @@
+/*
+* jieorlin CSS Reset
+* v1.0.2
+* 2011-11-18
+*/
+/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+/** 设置默认字体 **/
+html {
+    font-size: 62.5%;
+}
+
+html, body, button, input, select, textarea /* for ie */
+{
+    font: 12px/1.333 tahoma, arial, \5b8b\4f53, sans-serif; /*16÷12≈1.333*/
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+fieldset, img {
+    border: 0;
+}
+
+/* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea {
+    font-size: 100%;
+}
+
+/* 使得表单元素在 ie 下能继承字体大小 */
+table {
+    *border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*现代浏览器使用collapse属性会导致无法平分单元格和圆角无法包裹*/
+/* 用户体验增强：更加友好的手型光标提示 */
+label {
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+/*垂直居中*/
+input {
+    vertical-align: middle;
+}
+
+/*垂直居中*/
+input[type="button"], input[type="submit"], select, button {
+    cursor: pointer;
+}
+
+.tc {
+    text-align: center;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tr {
+    text-align: right;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.cl {
+    clear: both;
+}
+
+.fb {
+    font-weight: bold;
+}
+
+a {
+    /*color: #393939;*/
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    /*color: #1c78ac;*/
+}
+
+/*reset end*/
+
+body {
+    font-family: SimSun;
+    font-size: 14px;
+}
+
+.clearfix:after {
+    content: '\0020';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+}
+
+.clearfix {
+    *zoom: 1
+}
+
+#main {
+    margin: 0 auto;
+}
+
+#header {
+    height: 80px;
+    background-color: rgb(82, 42, 92);
+    color: white;
+    position: relative;
+}
+
+#header-sub-1 {
+    width: 980px;
+    margin: 0 auto;
+    height: 80px;
+    position: relative;
+}
+
+#header-content {
+    position: absolute;
+    bottom: 5px;
+    width: 980px;
+}
+
+#header-content h1 {
+    float: left;
+}
+
+#header-content ul {
+    float: right;
+}
+
+#header-content ul li {
+    float: left;
+    margin-left: 14px;
+}
+
+#header-right {
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+
+}
+
+/*#header-right{*/
+/*float: right;*/
+/*margin-right: 10px;*/
+/*}*/
+
+#bg-image {
+    height: 500px;
+    background-image: url("../img/banner-bg.jpg");
+
+}
+
+#bg-wrapper {
+    position: relative;
+    margin: 0 auto;
+    width: 980px;
+    height: 500px;
+}
+
+#bg-content {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 450px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}
+
+#bg-content h2 {
+    text-align: right;
+    font-size: 14px;
+}
+
+#bg-content p {
+    margin-top: 12px;
+    text-indent: 2em;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 10px 10px 30px 10px;
+
+}
+
+#content-wrapper {
+    background-color: rgb(238, 238, 238);
+}
+
+#content {
+    margin: 0 auto;
+    width: 980px;
+    color: black;
+    overflow: hidden; /*触发bfc*/
+}
+
+.content-li {
+    margin-top: 10px;
+    float: left;
+    width: 320px;
+    background-color: white;
+    text-align: center;
+    margin-right: 10px;
+    height: 400px;
+}
+
+.content-li:nth-child(3) {
+    margin-right: 0px;
+}
+
+.content-img {
+    padding-top: 10px;
+}
+
+.content-li a {
+    display: inline-block;
+}
+
+.content-li p {
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 15px 30px 25px 30px;
+    color: black;
+    text-indent: 2em;
+    text-align: justify;
+}
+
+#content-profile-wrapper {
+    background-color: white;
+    height: 400px;
+}
+
+#content-profile {
+    margin: 0 auto;
+    width: 850px;
+    text-align: center;
+}
+
+#content-profile-img {
+    position: relative;
+    margin: 0 auto;
+
+}
+
+#content-profile-img img {
+    border-radius: 150px;
+    width: 160px;
+    height: 160px;
+    margin-top: -50px;
+    border:5px solid #ccc;
+}
+
+#content-profile h1 {
+    margin-top: 50px;
+    font-size: 20px;
+    font-family: Century Gothic;
+    color: black;
+    text-align: center;
+}
+
+#content-profile p {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 14px;
+    color: black;
+    width: 600px;
+    padding-top: 50px;
+}
+
+#footer-wrapper {
+    background: black;
+    color: white;
+}
+
+#footer {
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+#footer-title {
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+#footer-title ul {
+    display: inline-block;
+    margin: 10px 0px;
+}
+
+#footer-title ul > li {
+    float: left;
+    margin-right: 15px;
+}
+
+.fc-title:first-child {
+    clear: left;
+}
+
+#footer-content {
+    display: inline-block;
+}
+
+.fc-div {
+    float: left;
+    margin: 0 60px;
+}
+.fc-title{
+    margin-top: 20px;
+}
+.fc-ul{
+    margin-top: 20px;
+}
+.fc-ul li{
+   line-height:1.5;
+}
+.fc-ul li a:hover{
+    text-decoration: underline;
+}
+#footer-logo{
+    margin-top: 50px;
+}
+#footer-logo img{
+    margin-top: 20px;
+}

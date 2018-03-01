@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>块状元素水平居中</title>
+    <style type="text/css">
+        #main {
+            float: left;
+            border: 1px solid red;
+            position: relative;
+            left: 50%
+        }
+
+        ul {
+            position: relative;
+        }
+
+        ul li {
+            list-style: none;
+            position: relative;
+            left: 50%;
+        }
+
+        .wrap {
+            height: 100px;
+            width: 200px;
+            vertical-align: middle;
+        }
+
+        .wrap h2 {
+            margin: 0;
+
+            background: #ccc;
+        }
+
+        .wrapper {
+            width: 500px;
+            height: 500px;
+            background-color: pink;
+
+            text-align: center;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: deepskyblue;
+
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 auto;
+        }
+
+        .help {
+            width: 0;
+            height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="main">
+    <ul>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+    </ul>
+
+</div>
+
+<div class="wrap">
+    <span>hi,imooc!</span>
+</div>
+<div class="wrapper">
+    <div class="box"></div>
+    <!--<div class="help"></div>-->
+</div>
+</body>
+
+</html>

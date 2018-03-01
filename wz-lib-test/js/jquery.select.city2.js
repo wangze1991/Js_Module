@@ -173,7 +173,6 @@
         };
         if(opt.nodata){
             nValue[opt.nodata][isShow ? 0 : 1].call(node);
-
         }
 
     };

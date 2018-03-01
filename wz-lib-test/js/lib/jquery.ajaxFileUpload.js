@@ -161,7 +161,7 @@ jQuery.extend({
                         jQuery.handleFileError(s, xml, null, e);
                     }
 
-                }, 100)
+                }, 100);
 
                 xml = null;
 

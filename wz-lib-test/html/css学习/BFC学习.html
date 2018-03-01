@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #main {
+            height: 100px;
+            background-color: #0000FF;
+        }
+
+        #div1 {
+            float: left;
+            background-color: #C4E3FD;
+            width: 200px;
+            height: 100px;
+        }
+
+        #div2 {
+            overflow: hidden;
+            background-color: #317ee7;
+            height: 100px;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .float-box {
+            /*float: left;*/
+            height: 100px;
+            width: 100px;
+            background: #9ACD32;
+            margin-top: 10px;
+        }
+
+        .box {
+            margin-top: 50px;
+            height: 200px;
+            width: 200px;
+            background: lightskyblue;
+            margin-bottom: 90px;
+        }
+
+        .absolute-box {
+            /*position: absolute;*/
+            margin-top: 100px;
+            background: blueviolet;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main">
+    <div id="div1">
+
+    </div>
+
+    <div id="div2">
+
+    </div>
+
+
+    <div class="box">
+        <div class="float-box">float-box</div>
+    </div>
+    <div class="absolute-box">absolute-box</div>
+</div>
+</body>
+</html>

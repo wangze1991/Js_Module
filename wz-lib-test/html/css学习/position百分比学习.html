@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .z1{
+            position: relative;
+            width: 400px;
+            height: 400px;
+            padding: 5px 10px;
+            color: #fff;
+            text-align: right;
+            background: #000;
+            border: 5px solid yellow;
+        }
+        .z2{
+            position: relative;
+            width: 200px;
+            height: 100px;
+            padding: 5px 10px;
+            color: #fff;
+            text-align: right;
+            z-index: 2;
+            top: 100%;
+            left: 100%;
+            background: #C00;
+            border: 5px solid blue;
+        }
+        .z3{
+            position: relative;
+            width: 400px;
+            height: 400px;
+            padding: 5px 10px;
+            color: #fff;
+            text-align: right;
+            background: #000;
+            border: 5px solid yellow;
+        }
+        .z4{
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            padding: 5px 10px;
+            color: #fff;
+            text-align: right;
+            z-index: 2;
+            top: 100%;
+            left: 100%;
+            background: #C00;
+            border: 5px solid blue;
+        }
+    </style>
+</head>
+<body>
+<div class="z1">
+    <div class="z2"></div>
+</div>
+<div class="z3">
+    <div class="z4"></div>
+</div>
+</body>
+</html>

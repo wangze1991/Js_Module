@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #main {
+            position: relative;
+        }
+
+        #main div {
+            height: 100px;
+        }
+
+        #t1 {
+            background-color: red;
+            width: 200px;
+            float: left;
+            min-width: 200px;
+        }
+        #t2 {
+            background-color: blue;
+            /*width: 100%;*/
+            overflow: hidden;
+        }
+
+        #t3 {
+            width: 200px;
+            background-color: #C4E3FD;
+            float: right;
+        }
+        #t4 {
+            float: right;
+            width: 200px;
+            background-color: #C4E3FD;
+        }
+
+        #main-2{
+            margin: 0 auto;
+        }
+        .fl {
+            float: left;
+        }
+
+
+        #d1{
+            height: 100px;
+            width: 200px;
+            margin-left: -100%;
+            background-color: #0000FF;
+        }
+        #d2{
+            height: 100px;
+            background-color: #C4E3FD;
+            width: 100%;
+        }
+        #d3{
+            height: 100px;
+            width: 200px;
+            margin-left: -200px;
+            background-color: #888888;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div id="main">
+    <div id="t1"></div>
+    <div id="t3"></div>
+    <div id="t2">
+        <p>123123</p>
+    </div>
+    <div style="clear: left">
+        <span></span>
+    </div>
+</div>
+
+<div id="main-2">
+    <div id="d2" class="fl">2</div>
+    <div id="d1" class="fl">1</div>
+    <div id="d3" class="fl">3</div>
+</div>
+
+
+
+
+</body>
+</html>
