@@ -165,6 +165,11 @@
                         return true;
                     }
                     var val = param[this.name];
+
+                    if(!(val||val===0)){
+                        return true;//如果值为空，跳出循环
+                    }
+
                     //如果是数组，这里直接不判断,单独写方法重构，遇到具体情况在分析。
                     if ($.isArray(val)) {
                         return true;
@@ -177,14 +182,26 @@
                     } else if (this.type == "checkbox") {
                         $(this).prop("checked", val == "True" || val === true);
                     } else if ((this.type == "radio")) {
-                        $("input[name=" + this.name + "][value=" + val + "]").prop("checked", true);
+                        $("input[name=" + this.name + "][value=" + val + "]",$form).prop("checked", true);
                     }
                 });
-                $('textarea,select', $form).each(function () {
+                $('select', $form).each(function () {
                     if (param.hasOwnProperty(this.name) === false) {
                         return true;
                     }
-                    $(this).val(param[this.name]);
+                    var value=param[this.name];
+                    if(value||value===0){
+                        $(this).val(value);
+                    }
+                });
+                $('textarea', $form).each(function () {
+                    if (param.hasOwnProperty(this.name) === false) {
+                        return true;
+                    }
+                    var value=param[this.name];
+                    if(value||value===0){
+                        $(this).text(value);
+                    }
                 });
             },
             /**
@@ -211,7 +228,6 @@
                         if ($(el).prop("checked") !== true) {
                             continue;
                         }
-
                     }
                     if (el.type == 'radio') {
                         if ($(el).prop("checked") !== true) {
@@ -229,10 +245,7 @@
                 }
                 return a;
             },
-
-
             'formToObject': function () {
-
             }
         };
     })();
@@ -275,9 +288,6 @@
                     o[this.name] = val;
                 }
             });
-            // $.each(nameArray, function (i, item) {
-            //     o[item] = o[item].join(',');
-            // });
             return o;
         };
 

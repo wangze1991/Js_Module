@@ -24,10 +24,13 @@
             {id: 222, pId: 22, name: "随意勾选 2-2-2"},
             {id: 23, pId: 2, name: "随意勾选 2-3"}
         ];
-
+       return treeFormatNode(zNodes);
     }
 
 
+    /**
+     *
+     **/
     function formatNode2(zNodes) {
         var i, l, j,
             key = 'id',
@@ -58,24 +61,34 @@
         return r;
     }
 
+    /**
+     * ztree 实现方式
+     * @param sNodes
+     * @returns {Array}
+     */
     function treeFormatNode(sNodes) {
         var i, l,
             key = 'id',
             parentKey = 'pId',
             childKey = 'children';
         if (!key || key == "" || !sNodes) return [];
-
         var r = [];
         var tmpMap = {};
         for (i = 0, l = sNodes.length; i < l; i++) {
+            //将节点对应的id值作为属性，对应一条记录
             tmpMap[sNodes[i][key]] = sNodes[i];
         }
         for (i = 0, l = sNodes.length; i < l; i++) {
+
+            //获取当前节点父节点id
+            //判断当前父节点是否在tmpMap中 并且当前 节点id和父节点id的值不一样
             if (tmpMap[sNodes[i][parentKey]] && sNodes[i][key] != sNodes[i][parentKey]) {
+                //如果当前节点的父节点是否有字节点
                 if (!tmpMap[sNodes[i][parentKey]][childKey])
                     tmpMap[sNodes[i][parentKey]][childKey] = [];
                 tmpMap[sNodes[i][parentKey]][childKey].push(sNodes[i]);
             } else {
+                //将所有根节点 输出
                 r.push(sNodes[i]);
             }
         }
@@ -104,14 +117,16 @@
             return n.id > 1;
         });
 
-        var b = $.map({a:1,b:2}, function (n, i) {
+        var b = $.map({a: 1, b: 2}, function (n, i) {
             console.log(n);
             console.log(i);
             return n;
         });
-        console.log(b);
+        // console.log(b);
+        //
+        // console.log(result);
 
-        console.log(result);
+        console.log(formatNode());
 
     });
 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="file" id="file-input" name="file">
+<button id="btn-upload">上传</button>
+
+<script src="/resource/script/lib/jquery.ajaxFileUpload.js"></script>
+<script>
+    $(function () {
+        $('#btn-upload').on('click',function () {
+            $.ajaxFileUpload({
+                fileElementId: '#file-input',
+                url: 'http://localhost:8089/upload',
+                data: {extraData: '1'},
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

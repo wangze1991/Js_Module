@@ -55,7 +55,7 @@
                 handler = element.find(handler);
             }
             //初始化
-            parent.css({position: 'relative'});
+            //parent.css({position: 'relative'});
             element.css({position: 'absolute'});
             var boxWidth = 0, boxHeight = 0, sonWidth = 0, sonHeight = 0;
             //盒子 和 元素大小初始化
@@ -151,15 +151,15 @@
                     if (moveX < 0) {
                         element.css({left: 0});
                     }
-                    if (moveX > (boxWidth - sonWidth)) {
-                        element.css({left: boxWidth - sonWidth});
-                    }
+                    // if (moveX > (boxWidth - sonWidth)) {
+                    //     element.css({left: boxWidth - sonWidth});
+                    // }
                     if (moveY < 0) {
                         element.css({top: 0});
                     }
-                    if (moveY > (boxHeight - sonHeight)) {
-                        element.css({top: boxHeight - sonHeight});
-                    }
+                    // if (moveY > (boxHeight - sonHeight)) {
+                    //     element.css({top: boxHeight - sonHeight});
+                    // }
                 }
 
                 if (isDown) {

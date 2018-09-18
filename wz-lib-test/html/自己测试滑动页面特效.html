@@ -48,10 +48,11 @@
 
 
     <div id="root" style="border: 1px solid red;width: 500px;height: 700px">
-        <div class=" handler_ok_bg handler2"></div>
+        <div class="handler2 handler_ok_bg "></div>
     </div>
 </div>
 <script src="../js/lib/jquery-1.10.2.js"></script>
+<script src="../js/widget/drag2.js"></script>
 <script type="text/javascript">
     /* ;(function () {
          var isMove = false;
@@ -119,19 +120,21 @@
                 opt = that.opt;
 
 
-            that.ele.on('mousedown', function (e) {
+            that.ele.on('mousedown', function (event) {
                 var position = $(this).position();
-                that.ele.css('cursor', 'move');
-                opt.x = e.pageX - position.left;
-                opt.y = e.pageY - position.top;
+                $(this).css('cursor', 'move');
+                opt.x = event.pageX - position.left;
+                opt.y = event.pageY - position.top;
                 opt.isMove = true;
-                e.preventDefault();
-                $(document).on('mouseup.' + opt.version, function (e) {
-                    that.stop(e);
-                }).on('mousemove.' + opt.version, function (e) {
-                    that.start(e);
-                });
+                //event.preventDefault();
             });
+            $(document).on('mouseup', function (e) {
+                that.stop(e);
+            }).on('mousemove', function (e) {
+                that.start(e);
+            });
+
+
 
             if (opt.root && opt.isRoot) {
                 opt.root.css('position', 'relative');
@@ -142,15 +145,10 @@
                 opt = that.opt,
                 left = e.pageX - opt.x,
                 top = e.pageY - opt.y;
-            e.preventDefault();
+            //e.preventDefault();
 
             if (!opt.isMove) return false;
 
-            if (opt.root && opt.isRoot) {
-                if (!that.contains(left, top)) {
-                    return false;
-                }
-            }
             if (opt.isX) {
                 that.ele.css({
                     left: left
@@ -178,28 +176,22 @@
                 opt = that.opt;
             opt.isMove = false;
             that.ele.css('cursor', 'auto');
-            $(document).off('.' + opt.version);
-            e.preventDefault();
+
         }
-        Drag.prototype.contains = function (x, y) {
-            var that = this,
-                opt = that.opt;
-            if (!(opt.root && opt.isRoot)) return false;
-            var offset = opt.root.offset();
-            return (0 <= x <=  opt.root.innerWidth()) && (0 <= y <= opt.root.innerHeight());
-        }
+
         w.Drag = Drag;
     })(window);
 
     (function () {
-        var drag = new Drag($('.handler'));
-        drag.init();
-        var drag2 = new Drag($('.handler2'),{
-            root:$('#root'),
-            isRoot:true,
-            isX:true
-        });
-        drag2.init();
+        // var drag = new Drag($('.handler'));
+        // drag.init();
+        // var drag2 = new Drag($('.handler2'),{
+        //
+        //      isX:true
+        // });
+        // drag2.init();
+        $('.handler').myDrag();
+        $('.handler2').myDrag();
     })();
 
 </script>
