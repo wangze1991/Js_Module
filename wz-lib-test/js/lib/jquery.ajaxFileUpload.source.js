@@ -58,8 +58,8 @@ jQuery.extend({
         // add extra parameter
         var originalElement = $('<input type="hidden" name="" value="">');
         for (var key in data) {
-            name = key;
-            value = data[key];
+           var name = key;
+           var value = data[key];
             var cloneElement = originalElement.clone();
             cloneElement.attr({'name':name,'value':value});
             $(cloneElement).appendTo(form);

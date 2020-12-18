@@ -169,7 +169,7 @@ if ($.fn.selectpicker) {
                         }
                         if (typeof nextVal !== 'undefined') selected = value == nextVal ? ' selected' : ''
                         html += '<option value="'+ value +'"'+ selected +'>' + label + '</option>'
-                    })
+                    });
 
                     $obj.removeAttr('data-val').removeData('val')
                     $next.removeAttr('data-val').removeData('val')

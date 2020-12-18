@@ -24,7 +24,7 @@
             {id: 222, pId: 22, name: "随意勾选 2-2-2"},
             {id: 23, pId: 2, name: "随意勾选 2-3"}
         ];
-       return treeFormatNode(zNodes);
+        return treeFormatNode(zNodes);
     }
 
 
@@ -79,7 +79,6 @@
             tmpMap[sNodes[i][key]] = sNodes[i];
         }
         for (i = 0, l = sNodes.length; i < l; i++) {
-
             //获取当前节点父节点id
             //判断当前父节点是否在tmpMap中 并且当前 节点id和父节点id的值不一样
             if (tmpMap[sNodes[i][parentKey]] && sNodes[i][key] != sNodes[i][parentKey]) {

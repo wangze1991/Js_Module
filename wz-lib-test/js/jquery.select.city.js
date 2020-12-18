@@ -4,6 +4,7 @@
 
 /**
  * 三级下拉框(省市区)
+ * http://jquerywidget.com/jquery-citys/
  */
 ;(function () {
     'use strict';
